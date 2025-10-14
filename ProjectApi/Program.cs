@@ -51,17 +51,23 @@ builder.Services.AddSwaggerGen(c =>
 
 
 // ✅ DATABASE CONFIG — tự động chọn SQL Server (local) hoặc PostgreSQL (cloud)
-var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-var envConnection = Environment.GetEnvironmentVariable("DATABASE_PUBLIC_URL");
-var connectionString = !string.IsNullOrEmpty(envConnection) ? envConnection : defaultConnection;
+var connectionString =
+    Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new Exception("❌ Không tìm thấy connection string!");
+}
 
 builder.Services.AddDbContext<FurnitureDbContext>(options =>
 {
-    if (connectionString.Contains("postgres", StringComparison.OrdinalIgnoreCase))
-        options.UseNpgsql(connectionString); // PostgreSQL (Render / Railway)
+    if (connectionString.Contains("Host=", StringComparison.OrdinalIgnoreCase))
+        options.UseNpgsql(connectionString);
     else
-        options.UseSqlServer(connectionString); // SQL Server (local)
+        options.UseSqlServer(connectionString);
 });
+
 
 
 // JWT setup
