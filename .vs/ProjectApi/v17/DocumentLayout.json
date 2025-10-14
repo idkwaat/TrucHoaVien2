@@ -175,7 +175,7 @@
               "RelativeDocumentMoniker": "ProjectApi\\Program.cs",
               "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
               "RelativeToolTip": "ProjectApi\\Program.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAADwv0UAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIkAAAAAAAAAAADwv6sAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T05:06:55.593Z",
               "EditorCaption": ""
@@ -262,7 +262,8 @@
               "RelativeToolTip": "ProjectApi\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-11T04:24:15.504Z"
+              "WhenOpened": "2025-10-11T04:24:15.504Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

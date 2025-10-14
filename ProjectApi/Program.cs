@@ -8,6 +8,7 @@ using ProjectApi.Services;
 using System.Text;
 using Microsoft.AspNetCore.StaticFiles;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers
@@ -150,5 +151,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.MapControllers();
+
+// ✅ Tự động migrate khi khởi động (chỉ dùng khi deploy)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<FurnitureDbContext>();
+    try
+    {
+        db.Database.Migrate();
+        Console.WriteLine("✅ Database migration applied successfully!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"❌ Database migration failed: {ex.Message}");
+    }
+}
+
 app.Run();
