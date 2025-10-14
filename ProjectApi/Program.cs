@@ -62,11 +62,12 @@ if (string.IsNullOrWhiteSpace(connectionString))
 
 builder.Services.AddDbContext<FurnitureDbContext>(options =>
 {
-    if (connectionString.Contains("Host=", StringComparison.OrdinalIgnoreCase))
-        options.UseNpgsql(connectionString);
+    if (connectionString.Contains("postgres", StringComparison.OrdinalIgnoreCase))
+        options.UseNpgsql(connectionString); // ✅ PostgreSQL
     else
-        options.UseSqlServer(connectionString);
+        options.UseSqlServer(connectionString); // SQL Server
 });
+
 
 
 
