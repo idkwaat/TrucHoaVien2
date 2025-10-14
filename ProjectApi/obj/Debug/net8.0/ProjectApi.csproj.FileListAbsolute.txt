@@ -180,3 +180,6 @@ C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\ProjectApi.pd
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\ProjectApi.genruntimeconfig.cache
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\ref\ProjectApi.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\Npgsql.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\ProjectApi.sourcelink.json
