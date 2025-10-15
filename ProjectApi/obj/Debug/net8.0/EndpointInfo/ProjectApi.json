@@ -492,6 +492,57 @@
         "tags": [
           "Products"
         ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 12
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "minPrice",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -681,6 +732,18 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Products/top-month": {
+      "get": {
+        "tags": [
+          "Products"
         ],
         "responses": {
           "200": {
@@ -1249,6 +1312,10 @@
             "nullable": true
           },
           "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
             "type": "string",
             "nullable": true
           },

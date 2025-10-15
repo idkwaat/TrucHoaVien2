@@ -30,9 +30,12 @@ namespace ProjectApi.Controllers
             var user = new User
             {
                 Username = dto.Username,
+                Email = dto.Email,
+                Phone = dto.Phone, // thêm
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 Role = "User"
             };
+
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectApi.Api.Models;
 using ProjectApi.Data;
 using ProjectApi.DTOs;
+using X.PagedList;
 
 namespace ProjectApi.Controllers
 {
@@ -19,17 +20,64 @@ namespace ProjectApi.Controllers
             _env = env;
         }
 
-        // 🟢 Lấy tất cả sản phẩm (cha + số biến thể)
+        // 🟢 Lấy tất cả sản phẩm (cha + toàn bộ biến thể, có tìm kiếm & phân trang)
+        // 🟢 Lấy tất cả sản phẩm (cha + toàn bộ biến thể, có tìm kiếm & phân trang)
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+            [FromQuery] string? search,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 12,
+            [FromQuery] int? categoryId = null,
+            [FromQuery] decimal? minPrice = null,
+            [FromQuery] decimal? maxPrice = null)
         {
-            var products = await _context.Products
+            if (page < 1) page = 1;
+
+            var query = _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Variants)
                 .Include(p => p.Reviews)
+                .AsQueryable();
+
+            // 🔍 Tìm kiếm
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                string keyword = search.Trim().ToLower();
+                query = query.Where(p =>
+                    p.Name.ToLower().Contains(keyword) ||
+                    (p.Description != null && p.Description.ToLower().Contains(keyword)));
+            }
+
+            // 🏷️ Lọc theo danh mục
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            // 💰 Lọc theo giá — vẫn giữ sản phẩm nếu chưa có biến thể
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p =>
+                    !p.Variants.Any() || p.Variants.Any(v => v.Price >= minPrice.Value));
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p =>
+                    !p.Variants.Any() || p.Variants.Any(v => v.Price <= maxPrice.Value));
+            }
+
+            // 🧮 Tổng sản phẩm
+            var totalItems = await query.CountAsync();
+
+            // 📄 Phân trang
+            var products = await query
                 .OrderByDescending(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
+            // ✨ Map sang DTO
             var result = products.Select(p => new
             {
                 p.Id,
@@ -37,21 +85,35 @@ namespace ProjectApi.Controllers
                 p.Description,
                 p.CategoryId,
                 CategoryName = p.Category?.Name ?? "Không có danh mục",
-                VariantCount = p.Variants.Count,
                 AverageRating = p.Reviews.Any() ? Math.Round(p.Reviews.Average(r => r.Rating), 1) : 0,
                 ReviewCount = p.Reviews.Count,
-                Variants = p.Variants.Select(v => new
-                {
-                    v.Id,
-                    v.Name,
-                    v.Price,
-                    v.ImageUrl,
-                    v.ModelUrl
-                })
+                Variants = (p.Variants != null && p.Variants.Any())
+    ? p.Variants.Select(v => new
+    {
+        v.Id,
+        v.Name,
+        v.Price,
+        v.ImageUrl,
+        v.ModelUrl
+    }).Cast<object>().ToList()
+    : new List<object>(),
+                // Không có biến thể vẫn trả rỗng
+                MinPrice = p.Variants.Any() ? p.Variants.Min(v => v.Price) : 0,
+                MaxPrice = p.Variants.Any() ? p.Variants.Max(v => v.Price) : 0
             });
 
-            return Ok(result);
+            return Ok(new
+            {
+                TotalItems = totalItems,
+                Page = page,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                Data = result
+            });
         }
+
+
+
 
 
         [HttpGet("{id}")]
@@ -88,6 +150,66 @@ namespace ProjectApi.Controllers
                     v.ModelUrl
                 })
             });
+        }
+
+
+        // 🟢 Top sản phẩm tháng (30 ngày gần nhất)
+        [HttpGet("top-month")]
+        public async Task<IActionResult> GetTopProductsOfMonth()
+        {
+            var oneMonthAgo = DateTime.Now.AddMonths(-1);
+
+            // Lấy toàn bộ sản phẩm
+            var products = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Variants)
+                .Include(p => p.Reviews)
+                .ToListAsync();
+
+            // Xử lý tính điểm trung bình trong tháng (nếu có)
+            var result = products.Select(p =>
+            {
+                var recentReviews = p.Reviews
+                    .Where(r => r.CreatedAt >= oneMonthAgo)
+                    .ToList();
+
+                double avgRating = 0;
+                if (recentReviews.Any())
+                {
+                    avgRating = Math.Round(recentReviews.Average(r => r.Rating), 1);
+                }
+                else if (p.Reviews.Any())
+                {
+                    // Nếu không có review trong tháng thì lấy điểm trung bình toàn bộ
+                    avgRating = Math.Round(p.Reviews.Average(r => r.Rating), 1);
+                }
+
+                return new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Description,
+                    p.CategoryId,
+                    CategoryName = p.Category != null ? p.Category.Name : "Không có danh mục",
+                    AverageRating = avgRating,
+                    ReviewCount = p.Reviews.Count,
+                    ImageUrl = p.Variants.FirstOrDefault()?.ImageUrl,
+                    Variants = p.Variants.Select(v => new
+                    {
+                        v.Id,
+                        v.Name,
+                        v.Price,
+                        v.ImageUrl
+                    }).ToList()
+                };
+            })
+            // Ưu tiên: có review trong tháng > có review cũ > chưa có review
+            .OrderByDescending(p => p.AverageRating)
+            .ThenByDescending(p => p.ReviewCount)
+            .Take(5)
+            .ToList();
+
+            return Ok(new { Data = result });
         }
 
 

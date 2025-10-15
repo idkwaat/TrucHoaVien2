@@ -46,3 +46,6 @@ wwwroot\uploads\6abe6c21-da9c-4716-96b0-e8b920fbe5bc.png
 wwwroot\uploads\6efc54e8-9ba7-4d63-b759-467b455f09be.png
 wwwroot\uploads\b2e1bb06-88d5-46a8-9f0e-89d95c9107a2.png
 wwwroot\avatars\34cdf5ca-879e-4903-8fbc-864ca89c27cf.jpg
+wwwroot\uploads\6c553f79-47f3-48d8-bf27-0e6d332774ee.png
+wwwroot\uploads\27521670-9453-423f-b0bd-ced3fe557a1a.jpg
+wwwroot\uploads\6a1d5693-c379-48e9-8be9-7f9189d3e9e1.jpg

@@ -183,3 +183,5 @@ C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\ref\ProjectAp
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\Npgsql.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\ProjectApi.sourcelink.json
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
