@@ -27,14 +27,26 @@ namespace ProjectApi.Controllers
             if (await _context.Users.AnyAsync(u => u.Username == dto.Username))
                 return BadRequest("Username already exists");
 
+            var role = string.IsNullOrEmpty(dto.Role) ? "User" : dto.Role;
+
+            // ✅ Chặn người bình thường tự tạo Admin
+            if (role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                // Ví dụ: chỉ cho phép tạo admin nếu chưa có admin nào
+                bool hasAdmin = await _context.Users.AnyAsync(u => u.Role == "Admin");
+                if (hasAdmin)
+                    return BadRequest("Bạn không thể tự tạo tài khoản admin!");
+            }
+
             var user = new User
             {
                 Username = dto.Username,
                 Email = dto.Email,
-                Phone = dto.Phone, // thêm
+                Phone = dto.Phone,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Role = "User"
+                Role = role
             };
+
 
 
             _context.Users.Add(user);
