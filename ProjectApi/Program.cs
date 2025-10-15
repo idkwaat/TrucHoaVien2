@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -6,28 +8,29 @@ using Microsoft.OpenApi.Models;
 using ProjectApi.Data;
 using ProjectApi.Services;
 using System.Text;
-using Microsoft.AspNetCore.StaticFiles;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers
-builder.Services.AddControllers();
+// ====================
+// 🔹 Controllers & Swagger
+// ====================
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger + JWT
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project API", Version = "v1" });
 
-    // ✅ Cấu hình xác thực JWT cho Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "Nhập JWT token theo định dạng: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
-        Scheme = "bearer", // lowercase để Swagger tự động gửi header đúng
+        Scheme = "bearer",
         BearerFormat = "JWT"
     });
 
@@ -50,29 +53,27 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-// ✅ DATABASE CONFIG — tự động chọn SQL Server (local) hoặc PostgreSQL (cloud)
+// ====================
+// 🔹 DATABASE CONFIG (SQL Server local / PostgreSQL deploy)
+// ====================
 var connectionString =
     Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
     ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrWhiteSpace(connectionString))
-{
     throw new Exception("❌ Không tìm thấy connection string!");
-}
 
 builder.Services.AddDbContext<FurnitureDbContext>(options =>
 {
     if (connectionString.Contains("postgres", StringComparison.OrdinalIgnoreCase))
-        options.UseNpgsql(connectionString); // ✅ PostgreSQL
+        options.UseNpgsql(connectionString);
     else
-        options.UseSqlServer(connectionString); // SQL Server
+        options.UseSqlServer(connectionString);
 });
 
-
-
-
-// JWT setup
+// ====================
+// 🔹 JWT setup
+// ====================
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
 
@@ -99,70 +100,84 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
 
-// Token Service
 builder.Services.AddScoped<ITokenService, TokenService>();
 
-// CORS
-// ✅ CORS policy cho Netlify + localhost
+// ====================
+// 🔹 CORS cho local + deploy (Netlify, Render, v.v.)
+// ====================
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins(
-            "https://truchoavien.netlify.app", // 🔹 site thật
-            "http://localhost:3000",           // 🔹 dev local
-            "https://localhost:3000"           // 🔹 nếu chạy https dev
-        )
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowCredentials();
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
+// ====================
+// 🔹 File upload limit
+// ====================
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 524288000; // 500MB (cho file .glb lớn)
+});
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 524288000; // 500MB
+});
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-
-// 🔹 Phải đặt CORS trước Authentication & Authorization
-app.UseCors("AllowFrontend");
-
+// ====================
+// 🔹 Middlewares
+// ====================
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// ====================
+// 🔹 STATIC FILE CONFIG
+// ====================
+var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+var uploadsPath = Path.Combine(wwwrootPath, "uploads");
+var avatarsPath = Path.Combine(wwwrootPath, "avatars");
 
-// Static files
-var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
-if (!Directory.Exists(uploadsPath))
-    Directory.CreateDirectory(uploadsPath);
+Directory.CreateDirectory(uploadsPath);
+Directory.CreateDirectory(avatarsPath);
 
 var provider = new FileExtensionContentTypeProvider();
+// Các MIME type cho model 3D
 provider.Mappings[".glb"] = "model/gltf-binary";
 provider.Mappings[".gltf"] = "model/gltf+json";
+provider.Mappings[".bin"] = "application/octet-stream";
+provider.Mappings[".fbx"] = "application/octet-stream";
+provider.Mappings[".obj"] = "model/obj";
+provider.Mappings[".mtl"] = "text/plain";
 
-var avatarsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "avatars");
-if (!Directory.Exists(avatarsPath))
-    Directory.CreateDirectory(avatarsPath);
-
-app.UseStaticFiles();
-
+// Cho phép phục vụ tất cả file
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(avatarsPath),
-    RequestPath = "/avatars",
+    FileProvider = new PhysicalFileProvider(wwwrootPath),
     ContentTypeProvider = provider,
     ServeUnknownFileTypes = true,
+    OnPrepareResponse = ctx =>
+    {
+        // Cho phép CORS với file .glb khi load từ frontend
+        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+        ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    }
 });
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
-
-
 app.MapControllers();
 
-// ✅ Tự động migrate khi khởi động (chỉ dùng khi deploy)
+// ====================
+// 🔹 Auto-migrate
+// ====================
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<FurnitureDbContext>();

@@ -116,7 +116,7 @@ namespace ProjectApi.Controllers
 
 
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
             var product = await _context.Products
@@ -216,8 +216,8 @@ namespace ProjectApi.Controllers
 
         // 🟢 Tạo sản phẩm cha + các biến thể
         [HttpPost("create")]
-
-
+        [RequestSizeLimit(200_000_000)] // ✅ Cho phép file lớn tới 200MB
+        [Consumes("multipart/form-data")] // ✅ Bắt Swagger gửi đúng dạng multipart
         public async Task<IActionResult> Create([FromForm] ProductCreateDto dto)
         {
             Console.WriteLine("===== FORM DEBUG =====");
@@ -299,7 +299,7 @@ namespace ProjectApi.Controllers
         }
 
         // 🟡 Cập nhật sản phẩm cha + đồng bộ biến thể
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductUpdateDto dto)
         {
             var product = await _context.Products
@@ -415,7 +415,7 @@ namespace ProjectApi.Controllers
 
 
         // 🔴 Xóa sản phẩm cha (xóa luôn biến thể)
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _context.Products
