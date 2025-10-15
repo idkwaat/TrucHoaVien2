@@ -107,7 +107,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+        policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://truchoavien.netlify.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -118,6 +118,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowReactApp");
+app.UseCors("AllowNetlify");
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -144,12 +145,9 @@ app.UseStaticFiles(new StaticFileOptions
     ServeUnknownFileTypes = true,
 });
 
-// Swagger
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 
 

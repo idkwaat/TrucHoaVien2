@@ -7,10 +7,6 @@
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251015060726_AddEmailAndPhoneToUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Migrations\\20251015060726_AddEmailAndPhoneToUser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -132,6 +128,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\migrations\\20251015060726_addemailandphonetouser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\migrations\\20251015060726_addemailandphonetouser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -145,7 +145,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 32,
               "Title": "20251015060726_AddEmailAndPhoneToUser.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251015060726_AddEmailAndPhoneToUser.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Migrations\\20251015060726_AddEmailAndPhoneToUser.cs",
@@ -153,12 +153,11 @@
               "RelativeToolTip": "ProjectApi\\Migrations\\20251015060726_AddEmailAndPhoneToUser.cs",
               "ViewState": "AgIAADQAAAAAAAAAAAAgwE4AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T06:07:26.864Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T06:07:26.864Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "RegisterDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\RegisterDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\RegisterDto.cs",
@@ -166,12 +165,11 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\RegisterDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T06:04:37.368Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T06:04:37.368Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "20251014201517_InitRenderDb.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251014201517_InitRenderDb.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Migrations\\20251014201517_InitRenderDb.cs",
@@ -179,12 +177,11 @@
               "RelativeToolTip": "ProjectApi\\Migrations\\20251014201517_InitRenderDb.cs",
               "ViewState": "AgIAAAoBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T20:15:17.355Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T20:15:17.355Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Program.cs",
@@ -192,12 +189,11 @@
               "RelativeToolTip": "ProjectApi\\Program.cs",
               "ViewState": "AgIAAI8AAAAAAAAAAADwv6sAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T05:06:55.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T05:06:55.593Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "ReviewContoller.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ReviewContoller.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ReviewContoller.cs",
@@ -209,7 +205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\User.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\User.cs",
@@ -217,12 +213,11 @@
               "RelativeToolTip": "ProjectApi\\Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T03:03:58.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T03:03:58.463Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "ProductVarient.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\ProductVarient.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\ProductVarient.cs",
@@ -234,7 +229,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\appsettings.json",
               "RelativeDocumentMoniker": "ProjectApi\\appsettings.json",
@@ -242,8 +237,7 @@
               "RelativeToolTip": "ProjectApi\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-11T04:24:15.504Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T04:24:15.504Z"
             },
             {
               "$type": "Document",
@@ -253,14 +247,14 @@
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProductsController.cs",
               "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProductsController.cs",
               "RelativeToolTip": "ProjectApi\\Controllers\\ProductsController.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAiwGQAAABPAAAAAAAAAA==",
+              "ViewState": "AgIAALsAAAAAAAAAAAAiwNUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-08T13:47:37.349Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "ReviewCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ReviewCreateDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ReviewCreateDto.cs",
@@ -272,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\AuthController.cs",
@@ -280,12 +274,11 @@
               "RelativeToolTip": "ProjectApi\\Controllers\\AuthController.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAQwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T06:45:26.007Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T06:45:26.007Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "ProductDTO.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductDTO.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ProductDTO.cs",
@@ -293,12 +286,11 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\ProductDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T14:07:42.988Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T14:07:42.988Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "ProductCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductCreateDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ProductCreateDto.cs",
@@ -310,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Product.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Product.cs",
@@ -322,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "package.json",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\frontend\\package.json",
               "RelativeDocumentMoniker": "..\\frontend\\package.json",
@@ -334,7 +326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "FurnitureDbContext.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Data\\FurnitureDbContext.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Data\\FurnitureDbContext.cs",
@@ -346,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "CategoriesController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CategoriesController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\CategoriesController.cs",
@@ -358,7 +350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "OrdersController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\OrdersController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\OrdersController.cs",
@@ -370,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 24,
               "Title": "ControllerExtensions.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Helpers\\ControllerExtensions.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Helpers\\ControllerExtensions.cs",
@@ -382,7 +374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 20,
               "Title": "Review.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Review.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Review.cs",
@@ -394,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 22,
               "Title": "OrderItem.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\OrderItem.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\OrderItem.cs",
@@ -406,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Order.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Order.cs",
@@ -418,7 +410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "ReviewDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ReviewDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ReviewDto.cs",
@@ -430,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "CartController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\CartController.cs",
@@ -442,7 +434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 21,
               "Title": "ProfileController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProfileController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProfileController.cs",
@@ -454,7 +446,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 23,
               "Title": "UpdateUserDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\UpdateUserDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\UpdateUserDto.cs",
@@ -466,7 +458,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 25,
               "Title": "ChangePasswordDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ChangePasswordDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ChangePasswordDto.cs",
@@ -478,7 +470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 26,
               "Title": "UserProfileDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\UserProfileDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\UserProfileDto.cs",
@@ -490,7 +482,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 27,
               "Title": "TokenService.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Services\\TokenService.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Services\\TokenService.cs",
@@ -502,7 +494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 28,
               "Title": "OrderRequest.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\OrderRequest.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\OrderRequest.cs",
@@ -514,7 +506,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 30,
               "Title": "OrderItemRequest.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\OrderItemRequest.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\OrderItemRequest.cs",
@@ -526,7 +518,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 29,
               "Title": "VariantDTO.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\VariantDTO.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\VariantDTO.cs",
@@ -538,7 +530,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 31,
               "Title": "CartItem.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\CartItem.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\CartItem.cs",
