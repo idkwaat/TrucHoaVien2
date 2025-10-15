@@ -103,24 +103,33 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // CORS
+// ✅ CORS policy cho Netlify + localhost
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://truchoavien.netlify.app")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        policy.WithOrigins(
+            "https://truchoavien.netlify.app", // 🔹 site thật
+            "http://localhost:3000",           // 🔹 dev local
+            "https://localhost:3000"           // 🔹 nếu chạy https dev
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
     });
 });
+
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-app.UseCors("AllowReactApp");
-app.UseCors("AllowNetlify");
+
+// 🔹 Phải đặt CORS trước Authentication & Authorization
+app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 // Static files
 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
