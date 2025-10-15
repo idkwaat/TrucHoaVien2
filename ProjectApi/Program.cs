@@ -115,6 +115,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+
 // ====================
 // 🔹 File upload limit
 // ====================
@@ -130,6 +132,8 @@ builder.Services.Configure<FormOptions>(options =>
 
 var app = builder.Build();
 
+
+app.UseHttpsRedirection();
 // ====================
 // 🔹 Middlewares
 // ====================
