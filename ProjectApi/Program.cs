@@ -6,19 +6,32 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectApi.Data;
-using ProjectApi.Models; // ✅ thêm dòng này
+using ProjectApi.Models;
 using ProjectApi.Services;
 using System.Text;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
 
-var builder = WebApplication.CreateBuilder(args); // ✅ chỉ giữ 1 dòng này
+var builder = WebApplication.CreateBuilder(args);
 
-// Đọc config
+// ====================
+// 🔹 Cho phép upload file lớn (500MB)
+// ====================
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 524_288_000; // 500MB
+});
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 524_288_000; // 500MB
+});
+
+// ====================
+// 🔹 Cloudinary config
+// ====================
 builder.Services.Configure<CloudinarySettings>(
     builder.Configuration.GetSection("CloudinarySettings"));
 
-// Tạo instance Cloudinary dùng DI
 builder.Services.AddSingleton(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
@@ -33,11 +46,9 @@ builder.Services.AddControllers(options =>
     options.SuppressAsyncSuffixInActionNames = false;
 });
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project API", Version = "v1" });
-
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "Nhập JWT token theo định dạng: Bearer {token}",
@@ -47,7 +58,6 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT"
     });
-
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -57,10 +67,7 @@ builder.Services.AddSwaggerGen(c =>
                 {
                     Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
-                },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
+                }
             },
             new List<string>()
         }
@@ -68,7 +75,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // ====================
-// 🔹 DATABASE CONFIG (SQL Server local / PostgreSQL deploy)
+// 🔹 Database setup (Render/Postgres hoặc local)
 // ====================
 var connectionString =
     Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
@@ -117,7 +124,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // ====================
-// 🔹 CORS cho local + deploy (Netlify, Render, v.v.)
+// 🔹 CORS (Render + local)
 // ====================
 builder.Services.AddCors(options =>
 {
@@ -129,49 +136,29 @@ builder.Services.AddCors(options =>
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
-        .AllowCredentials(); // cho phép gửi token JWT/cookie
+        .AllowCredentials();
     });
-});
-
-
-
-
-// ====================
-// 🔹 File upload limit
-// ====================
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Limits.MaxRequestBodySize = 524288000; // 500MB (cho file .glb lớn)
-});
-
-builder.Services.Configure<FormOptions>(options =>
-{
-    options.MultipartBodyLengthLimit = 524288000; // 500MB
 });
 
 var app = builder.Build();
 
+// ⚠️ Render đã có HTTPS proxy, nên KHÔNG cần dòng này:
+// app.UseHttpsRedirection();
 
-app.UseHttpsRedirection();
-// ====================
-// 🔹 Middlewares
-// ====================
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
 // ====================
-// 🔹 STATIC FILE CONFIG
+// 🔹 Static file cho .glb, .gltf
 // ====================
 var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 var uploadsPath = Path.Combine(wwwrootPath, "uploads");
 var avatarsPath = Path.Combine(wwwrootPath, "avatars");
-
 Directory.CreateDirectory(uploadsPath);
 Directory.CreateDirectory(avatarsPath);
 
 var provider = new FileExtensionContentTypeProvider();
-// Các MIME type cho model 3D
 provider.Mappings[".glb"] = "model/gltf-binary";
 provider.Mappings[".gltf"] = "model/gltf+json";
 provider.Mappings[".bin"] = "application/octet-stream";
@@ -179,7 +166,6 @@ provider.Mappings[".fbx"] = "application/octet-stream";
 provider.Mappings[".obj"] = "model/obj";
 provider.Mappings[".mtl"] = "text/plain";
 
-// Cho phép phục vụ tất cả file
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(wwwrootPath),
@@ -187,7 +173,6 @@ app.UseStaticFiles(new StaticFileOptions
     ServeUnknownFileTypes = true,
     OnPrepareResponse = ctx =>
     {
-        // Cho phép CORS với file .glb khi load từ frontend
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
         ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     }
@@ -195,11 +180,10 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
 app.MapControllers();
 
 // ====================
-// 🔹 Auto-migrate
+// 🔹 Auto-migrate database
 // ====================
 using (var scope = app.Services.CreateScope())
 {
