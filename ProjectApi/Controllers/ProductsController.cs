@@ -350,7 +350,31 @@ namespace ProjectApi.Controllers
                 product.Description = dto.Description;
                 product.CategoryId = dto.CategoryId;
 
-                Console.WriteLine($"🟡 [UpdateProduct] Files count: {Request.Form.Files.Count}");
+                Console.WriteLine($"🟡 [UpdateProduct] Tổng file: {Request.Form.Files.Count}");
+
+                // 🖼️ Ảnh đại diện sản phẩm cha (nếu có)
+                if (dto.DefaultImage != null)
+                {
+                    try
+                    {
+                        using var stream = dto.DefaultImage.OpenReadStream();
+                        var uploadParams = new ImageUploadParams
+                        {
+                            File = new FileDescription(dto.DefaultImage.FileName, stream),
+                            Folder = "uploads/products"
+                        };
+                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                        product.ImageUrl = uploadResult.SecureUrl.ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"❌ Lỗi upload ảnh đại diện: {ex.Message}");
+                    }
+                }
+                else if (!string.IsNullOrEmpty(dto.DefaultImageUrl))
+                {
+                    product.ImageUrl = dto.DefaultImageUrl;
+                }
 
                 // 🗑️ Xóa biến thể
                 if (!string.IsNullOrEmpty(dto.DeletedVariantIds))
@@ -373,15 +397,15 @@ namespace ProjectApi.Controllers
                         var name = dto.VariantNames[i];
                         var price = dto.VariantPrices?.ElementAtOrDefault(i) ?? 0;
 
-                        // 🔸 Lấy file đúng index (nếu có)
-                        var imageFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantImages[{i}]");
-                        var modelFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantModels[{i}]");
+                        // ✅ Lấy file đúng chỉ số
+                        var imageFile = Request.Form.Files.GetFile($"VariantImages[{i}]");
+                        var modelFile = Request.Form.Files.GetFile($"VariantModels[{i}]");
 
                         string? imageUrl = dto.VariantImageUrls?.ElementAtOrDefault(i);
                         string? modelUrl = dto.VariantModelUrls?.ElementAtOrDefault(i);
 
                         ProductVariant variant;
-                        if (variantId != null && variantId > 0)
+                        if (variantId.HasValue && variantId > 0)
                         {
                             variant = product.Variants.FirstOrDefault(v => v.Id == variantId);
                             if (variant == null) continue;
@@ -395,7 +419,7 @@ namespace ProjectApi.Controllers
                         variant.Name = $"{product.Name} - {name}";
                         variant.Price = price;
 
-                        // 🖼️ Upload ảnh mới
+                        // 🖼️ Upload ảnh
                         if (imageFile != null && imageFile.Length > 0)
                         {
                             try
@@ -419,7 +443,7 @@ namespace ProjectApi.Controllers
                             variant.ImageUrl = imageUrl;
                         }
 
-                        // 🧱 Upload model mới
+                        // 🧱 Upload model 3D
                         if (modelFile != null && modelFile.Length > 0)
                         {
                             try
@@ -443,15 +467,15 @@ namespace ProjectApi.Controllers
                             variant.ModelUrl = modelUrl;
                         }
                     }
+                }
 
-                    // 🔁 Cập nhật lại tên biến thể theo tên cha
-                    foreach (var v in product.Variants)
+                // 🔁 Đồng bộ lại tên biến thể theo tên cha
+                foreach (var v in product.Variants)
+                {
+                    if (!string.IsNullOrEmpty(v.Name))
                     {
-                        if (!string.IsNullOrEmpty(v.Name))
-                        {
-                            var parts = v.Name.Split(" - ");
-                            v.Name = $"{product.Name} - {parts.Last()}";
-                        }
+                        var parts = v.Name.Split(" - ");
+                        v.Name = $"{product.Name} - {parts.Last()}";
                     }
                 }
 
@@ -464,6 +488,7 @@ namespace ProjectApi.Controllers
                 return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
         }
+
 
 
 
