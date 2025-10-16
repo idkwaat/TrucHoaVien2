@@ -121,13 +121,18 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 // ====================
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "https://truchoavien.vercel.app",
+            "http://localhost:5173"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials(); // cho phép gửi token JWT/cookie
     });
 });
+
 
 
 
@@ -151,7 +156,7 @@ app.UseHttpsRedirection();
 // ====================
 // 🔹 Middlewares
 // ====================
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 

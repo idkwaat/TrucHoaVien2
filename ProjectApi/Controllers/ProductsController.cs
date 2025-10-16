@@ -280,28 +280,42 @@ namespace ProjectApi.Controllers
 
                     if (image != null)
                     {
-                        using var stream = image.OpenReadStream();
-                        var uploadParams = new ImageUploadParams
+                        try
                         {
-                            File = new FileDescription(image.FileName, stream),
-                            Folder = "uploads/images"
-                        };
-                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-                        imageUrl = uploadResult.SecureUrl.ToString();
+                            using var stream = image.OpenReadStream();
+                            var uploadParams = new ImageUploadParams
+                            {
+                                File = new FileDescription(image.FileName, stream),
+                                Folder = "uploads/images"
+                            };
+                            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                            imageUrl = uploadResult.SecureUrl.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"❌ Lỗi upload ảnh: {ex.Message}");
+                        }
                     }
-
 
                     if (model != null)
                     {
-                        using var stream = model.OpenReadStream();
-                        var uploadParams = new RawUploadParams
+                        try
                         {
-                            File = new FileDescription(model.FileName, stream),
-                            Folder = "uploads/models"
-                        };
-                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-                        modelUrl = uploadResult.SecureUrl.ToString();
+                            using var stream = model.OpenReadStream();
+                            var uploadParams = new RawUploadParams
+                            {
+                                File = new FileDescription(model.FileName, stream),
+                                Folder = "uploads/models"
+                            };
+                            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                            modelUrl = uploadResult.SecureUrl.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"❌ Lỗi upload model: {ex.Message}");
+                        }
                     }
+
 
 
                     _context.ProductVariants.Add(new ProductVariant
@@ -319,116 +333,136 @@ namespace ProjectApi.Controllers
             return Ok(new { message = "✅ Tạo sản phẩm thành công", productId = product.Id });
         }
 
-        // 🟡 Cập nhật sản phẩm cha + đồng bộ biến thể
         [HttpPut("{id:int}")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductUpdateDto dto)
         {
-            var product = await _context.Products
-                .Include(p => p.Variants)
-                .FirstOrDefaultAsync(p => p.Id == id);
-
-            if (product == null)
-                return NotFound($"Không tìm thấy sản phẩm có ID = {id}");
-
-            product.Name = dto.Name;
-            product.Description = dto.Description;
-            product.CategoryId = dto.CategoryId;
-
-            Console.WriteLine($"[UpdateProduct] ContentType: {Request.ContentType}");
-            Console.WriteLine($"[UpdateProduct] Files count: {Request.Form.Files.Count}");
-
-            // ✅ Xóa biến thể nếu có DeletedVariantIds
-            if (!string.IsNullOrEmpty(dto.DeletedVariantIds))
+            try
             {
-                var deletedIds = System.Text.Json.JsonSerializer.Deserialize<List<int>>(dto.DeletedVariantIds);
-                if (deletedIds != null && deletedIds.Any())
-                {
-                    var toRemove = product.Variants.Where(v => deletedIds.Contains(v.Id)).ToList();
-                    _context.ProductVariants.RemoveRange(toRemove);
-                    Console.WriteLine($"🗑️ Đã xóa {toRemove.Count} biến thể");
-                }
-            }
+                var product = await _context.Products
+                    .Include(p => p.Variants)
+                    .FirstOrDefaultAsync(p => p.Id == id);
 
-            // ✅ Cập nhật hoặc thêm biến thể
-            if (dto.VariantNames != null && dto.VariantNames.Any())
+                if (product == null)
+                    return NotFound($"Không tìm thấy sản phẩm có ID = {id}");
+
+                product.Name = dto.Name;
+                product.Description = dto.Description;
+                product.CategoryId = dto.CategoryId;
+
+                Console.WriteLine($"🟡 [UpdateProduct] Files count: {Request.Form.Files.Count}");
+
+                // 🗑️ Xóa biến thể
+                if (!string.IsNullOrEmpty(dto.DeletedVariantIds))
+                {
+                    var deletedIds = System.Text.Json.JsonSerializer.Deserialize<List<int>>(dto.DeletedVariantIds);
+                    if (deletedIds?.Any() == true)
+                    {
+                        var toRemove = product.Variants.Where(v => deletedIds.Contains(v.Id)).ToList();
+                        _context.ProductVariants.RemoveRange(toRemove);
+                        Console.WriteLine($"🗑️ Đã xóa {toRemove.Count} biến thể");
+                    }
+                }
+
+                // 🔄 Thêm hoặc cập nhật biến thể
+                if (dto.VariantNames != null && dto.VariantNames.Any())
+                {
+                    for (int i = 0; i < dto.VariantNames.Count; i++)
+                    {
+                        var variantId = dto.VariantIds?.ElementAtOrDefault(i);
+                        var name = dto.VariantNames[i];
+                        var price = dto.VariantPrices?.ElementAtOrDefault(i) ?? 0;
+
+                        // 🔸 Lấy file đúng index (nếu có)
+                        var imageFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantImages[{i}]");
+                        var modelFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantModels[{i}]");
+
+                        string? imageUrl = dto.VariantImageUrls?.ElementAtOrDefault(i);
+                        string? modelUrl = dto.VariantModelUrls?.ElementAtOrDefault(i);
+
+                        ProductVariant variant;
+                        if (variantId != null && variantId > 0)
+                        {
+                            variant = product.Variants.FirstOrDefault(v => v.Id == variantId);
+                            if (variant == null) continue;
+                        }
+                        else
+                        {
+                            variant = new ProductVariant { ProductId = product.Id };
+                            _context.ProductVariants.Add(variant);
+                        }
+
+                        variant.Name = $"{product.Name} - {name}";
+                        variant.Price = price;
+
+                        // 🖼️ Upload ảnh mới
+                        if (imageFile != null && imageFile.Length > 0)
+                        {
+                            try
+                            {
+                                using var stream = imageFile.OpenReadStream();
+                                var uploadParams = new ImageUploadParams
+                                {
+                                    File = new FileDescription(imageFile.FileName, stream),
+                                    Folder = "uploads/images"
+                                };
+                                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                                variant.ImageUrl = uploadResult.SecureUrl.ToString();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"❌ Lỗi upload ảnh biến thể {i}: {ex.Message}");
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(imageUrl))
+                        {
+                            variant.ImageUrl = imageUrl;
+                        }
+
+                        // 🧱 Upload model mới
+                        if (modelFile != null && modelFile.Length > 0)
+                        {
+                            try
+                            {
+                                using var stream = modelFile.OpenReadStream();
+                                var uploadParams = new RawUploadParams
+                                {
+                                    File = new FileDescription(modelFile.FileName, stream),
+                                    Folder = "uploads/models"
+                                };
+                                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                                variant.ModelUrl = uploadResult.SecureUrl.ToString();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"❌ Lỗi upload model biến thể {i}: {ex.Message}");
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(modelUrl))
+                        {
+                            variant.ModelUrl = modelUrl;
+                        }
+                    }
+
+                    // 🔁 Cập nhật lại tên biến thể theo tên cha
+                    foreach (var v in product.Variants)
+                    {
+                        if (!string.IsNullOrEmpty(v.Name))
+                        {
+                            var parts = v.Name.Split(" - ");
+                            v.Name = $"{product.Name} - {parts.Last()}";
+                        }
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "✅ Cập nhật sản phẩm và biến thể thành công!" });
+            }
+            catch (Exception ex)
             {
-                for (int i = 0; i < dto.VariantNames.Count; i++)
-                {
-                    var variantId = dto.VariantIds?.ElementAtOrDefault(i);
-                    var name = dto.VariantNames[i];
-                    var price = dto.VariantPrices?[i] ?? 0;
-
-                    var imageFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantImages[{i}]");
-                    var modelFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantModels[{i}]");
-
-                    var imageUrl = dto.VariantImageUrls?.ElementAtOrDefault(i);
-                    var modelUrl = dto.VariantModelUrls?.ElementAtOrDefault(i);
-
-                    ProductVariant variant;
-                    if (variantId != null && variantId > 0)
-                    {
-                        variant = product.Variants.FirstOrDefault(v => v.Id == variantId);
-                        if (variant == null)
-                            continue;
-                    }
-                    else
-                    {
-                        variant = new ProductVariant { ProductId = product.Id };
-                        _context.ProductVariants.Add(variant);
-                    }
-
-                    variant.Name = $"{product.Name} - {name}";
-                    variant.Price = price;
-
-                    // 🖼️ Upload ảnh mới nếu có
-                    if (imageFile != null && imageFile.Length > 0)
-                    {
-                        using var stream = imageFile.OpenReadStream();
-                        var uploadParams = new ImageUploadParams
-                        {
-                            File = new FileDescription(imageFile.FileName, stream),
-                            Folder = "uploads/images"
-                        };
-                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-                        variant.ImageUrl = uploadResult.SecureUrl.ToString();
-                    }
-                    else if (!string.IsNullOrEmpty(imageUrl))
-                    {
-                        variant.ImageUrl = imageUrl;
-                    }
-
-                    // 🧱 Upload model mới nếu có
-                    if (modelFile != null && modelFile.Length > 0)
-                    {
-                        using var stream = modelFile.OpenReadStream();
-                        var uploadParams = new RawUploadParams
-                        {
-                            File = new FileDescription(modelFile.FileName, stream),
-                            Folder = "uploads/models"
-                        };
-                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-                        variant.ModelUrl = uploadResult.SecureUrl.ToString();
-                    }
-                    else if (!string.IsNullOrEmpty(modelUrl))
-                    {
-                        variant.ModelUrl = modelUrl;
-                    }
-                }
-
-                // 🔄 Cập nhật lại tên variant theo tên cha
-                foreach (var v in product.Variants)
-                {
-                    if (!string.IsNullOrEmpty(v.Name))
-                    {
-                        var parts = v.Name.Split(" - ");
-                        v.Name = $"{product.Name} - {parts.Last()}";
-                    }
-                }
+                Console.WriteLine($"🔥 Lỗi UpdateProduct: {ex}");
+                return StatusCode(500, $"Lỗi server: {ex.Message}");
             }
-
-            await _context.SaveChangesAsync();
-            return Ok("✅ Cập nhật sản phẩm và biến thể thành công!");
         }
 
 
