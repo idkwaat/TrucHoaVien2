@@ -230,7 +230,7 @@ namespace ProjectApi.Controllers
         // 🟢 Tạo sản phẩm cha + các biến thể
         [HttpPost("create")]
         [RequestSizeLimit(200_000_000)] // ✅ Cho phép file lớn tới 200MB
-        [Consumes("multipart/form-data")] // ✅ Bắt Swagger gửi đúng dạng multipart
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateDto dto)
         {
             Console.WriteLine("===== FORM DEBUG =====");
@@ -245,13 +245,13 @@ namespace ProjectApi.Controllers
             }
             Console.WriteLine("=======================");
 
-            var images = Request.Form.Files.GetFiles("VariantImages");
-            var models = Request.Form.Files.GetFiles("VariantModels");
-
             if (dto == null || string.IsNullOrWhiteSpace(dto.Name))
                 return BadRequest("Tên sản phẩm không được để trống.");
 
-            string uploadPath = Path.Combine(_env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "uploads");
+            string uploadPath = Path.Combine(
+                _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"),
+                "uploads"
+            );
             if (!Directory.Exists(uploadPath)) Directory.CreateDirectory(uploadPath);
 
             // 🔹 Tạo sản phẩm cha
@@ -271,21 +271,28 @@ namespace ProjectApi.Controllers
                 for (int i = 0; i < dto.VariantNames.Count; i++)
                 {
                     string name = dto.VariantNames[i];
-                    decimal price = dto.VariantPrices?[i] ?? 0;
-                    var image = images.ElementAtOrDefault(i);
-                    var model = models.ElementAtOrDefault(i);
+                    decimal price = dto.VariantPrices?.ElementAtOrDefault(i) ?? 0;
 
+                    // 🧩 FIX: lấy đúng file kể cả phần tử đầu tiên không có [0]
+                    var imageFile = Request.Form.Files.FirstOrDefault(f =>
+                        f.Name == $"VariantImages[{i}]" || (i == 0 && f.Name == "VariantImages")
+                    );
+
+                    var modelFile = Request.Form.Files.FirstOrDefault(f =>
+                        f.Name == $"VariantModels[{i}]" || (i == 0 && f.Name == "VariantModels")
+                    );
 
                     string? imageUrl = null, modelUrl = null;
 
-                    if (image != null)
+                    // 🖼️ Upload ảnh
+                    if (imageFile != null)
                     {
                         try
                         {
-                            using var stream = image.OpenReadStream();
+                            using var stream = imageFile.OpenReadStream();
                             var uploadParams = new ImageUploadParams
                             {
-                                File = new FileDescription(image.FileName, stream),
+                                File = new FileDescription(imageFile.FileName, stream),
                                 Folder = "uploads/images"
                             };
                             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
@@ -297,27 +304,41 @@ namespace ProjectApi.Controllers
                         }
                     }
 
-                    if (model != null)
+                    // 🧱 Upload model (3D) dung lượng lớn
+                    // 🧱 Upload model (3D) dung lượng lớn
+                    if (modelFile != null)
                     {
                         try
                         {
-                            using var stream = model.OpenReadStream();
+                            Console.WriteLine($"⬆️ Uploading large model: {modelFile.FileName} ({modelFile.Length / 1024 / 1024} MB)");
+
+                            using var stream = modelFile.OpenReadStream();
+
+                            // Dùng RawUploadParams vì là file 3D (không phải ảnh)
                             var uploadParams = new RawUploadParams
                             {
-                                File = new FileDescription(model.FileName, stream),
-                                Folder = "uploads/models"
+                                File = new FileDescription(modelFile.FileName, stream),
+                                Folder = "uploads/models",
+                                UseFilename = true,
+                                UniqueFilename = false
+                                // ResourceType is set by using RawUploadParams, no need to assign
                             };
-                            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                            // ✅ Dùng phương thức upload dành cho file lớn
+                            var uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
+
                             modelUrl = uploadResult.SecureUrl.ToString();
+
+                            Console.WriteLine($"✅ Uploaded model: {modelUrl}");
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"❌ Lỗi upload model: {ex.Message}");
+                            Console.WriteLine($"❌ Lỗi upload model lớn: {ex.Message}");
                         }
                     }
 
 
-
+                    // 🔹 Lưu biến thể
                     _context.ProductVariants.Add(new ProductVariant
                     {
                         ProductId = product.Id,
@@ -330,8 +351,10 @@ namespace ProjectApi.Controllers
 
                 await _context.SaveChangesAsync();
             }
+
             return Ok(new { message = "✅ Tạo sản phẩm thành công", productId = product.Id });
         }
+
 
         [HttpPut("{id:int}")]
         [Consumes("multipart/form-data")]
