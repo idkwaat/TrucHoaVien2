@@ -3,7 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using ProjectApi.Api.Models;
 using ProjectApi.Data;
 using ProjectApi.DTOs;
-using X.PagedList;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using ProjectApi.Models;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProjectApi.Controllers
 {
@@ -13,14 +18,22 @@ namespace ProjectApi.Controllers
     {
         private readonly FurnitureDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly Cloudinary _cloudinary;
 
         public ProductsController(FurnitureDbContext context, IWebHostEnvironment env)
         {
             _context = context;
             _env = env;
+
+            // ✅ Cấu hình Cloudinary (thay bằng key của bạn)
+            var account = new Account(
+                "drequjrqq",
+                "388973676734171",
+                "QQWKtTgzykIRTB0xRtQJ054pjF8"
+            );
+            _cloudinary = new Cloudinary(account);
         }
 
-        // 🟢 Lấy tất cả sản phẩm (cha + toàn bộ biến thể, có tìm kiếm & phân trang)
         // 🟢 Lấy tất cả sản phẩm (cha + toàn bộ biến thể, có tìm kiếm & phân trang)
         [HttpGet]
         public async Task<IActionResult> GetAll(
@@ -267,21 +280,29 @@ namespace ProjectApi.Controllers
 
                     if (image != null)
                     {
-                        string fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-                        string filePath = Path.Combine(uploadPath, fileName);
-                        using var stream = new FileStream(filePath, FileMode.Create);
-                        await image.CopyToAsync(stream);
-                        imageUrl = "/uploads/" + fileName;
+                        using var stream = image.OpenReadStream();
+                        var uploadParams = new ImageUploadParams
+                        {
+                            File = new FileDescription(image.FileName, stream),
+                            Folder = "uploads/images"
+                        };
+                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                        imageUrl = uploadResult.SecureUrl.ToString();
                     }
+
 
                     if (model != null)
                     {
-                        string fileName = Guid.NewGuid() + Path.GetExtension(model.FileName);
-                        string filePath = Path.Combine(uploadPath, fileName);
-                        using var stream = new FileStream(filePath, FileMode.Create);
-                        await model.CopyToAsync(stream);
-                        modelUrl = "/uploads/" + fileName;
+                        using var stream = model.OpenReadStream();
+                        var uploadParams = new RawUploadParams
+                        {
+                            File = new FileDescription(model.FileName, stream),
+                            Folder = "uploads/models"
+                        };
+                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                        modelUrl = uploadResult.SecureUrl.ToString();
                     }
+
 
                     _context.ProductVariants.Add(new ProductVariant
                     {
@@ -300,6 +321,7 @@ namespace ProjectApi.Controllers
 
         // 🟡 Cập nhật sản phẩm cha + đồng bộ biến thể
         [HttpPut("{id:int}")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductUpdateDto dto)
         {
             var product = await _context.Products
@@ -313,14 +335,8 @@ namespace ProjectApi.Controllers
             product.Description = dto.Description;
             product.CategoryId = dto.CategoryId;
 
-            string uploadPath = Path.Combine(_env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "uploads");
-            if (!Directory.Exists(uploadPath))
-                Directory.CreateDirectory(uploadPath);
-
             Console.WriteLine($"[UpdateProduct] ContentType: {Request.ContentType}");
             Console.WriteLine($"[UpdateProduct] Files count: {Request.Form.Files.Count}");
-            foreach (var f in Request.Form.Files)
-                Console.WriteLine($"[UpdateProduct] File field: '{f.Name}' FileName: '{f.FileName}'");
 
             // ✅ Xóa biến thể nếu có DeletedVariantIds
             if (!string.IsNullOrEmpty(dto.DeletedVariantIds))
@@ -330,6 +346,7 @@ namespace ProjectApi.Controllers
                 {
                     var toRemove = product.Variants.Where(v => deletedIds.Contains(v.Id)).ToList();
                     _context.ProductVariants.RemoveRange(toRemove);
+                    Console.WriteLine($"🗑️ Đã xóa {toRemove.Count} biến thể");
                 }
             }
 
@@ -342,7 +359,6 @@ namespace ProjectApi.Controllers
                     var name = dto.VariantNames[i];
                     var price = dto.VariantPrices?[i] ?? 0;
 
-                    // ✅ Lấy file chính xác theo key FormData (VariantImages[0], VariantModels[0], ...)
                     var imageFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantImages[{i}]");
                     var modelFile = Request.Form.Files.FirstOrDefault(f => f.Name == $"VariantModels[{i}]");
 
@@ -359,35 +375,40 @@ namespace ProjectApi.Controllers
                     else
                     {
                         variant = new ProductVariant { ProductId = product.Id };
-                        _context.ProductVariants.Add(variant); // ✅ thay vì product.Variants.Add
+                        _context.ProductVariants.Add(variant);
                     }
-
 
                     variant.Name = $"{product.Name} - {name}";
                     variant.Price = price;
 
-                    // ✅ Nếu có ảnh mới → ghi đè ảnh cũ
+                    // 🖼️ Upload ảnh mới nếu có
                     if (imageFile != null && imageFile.Length > 0)
                     {
-                        string fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-                        string path = Path.Combine(uploadPath, fileName);
-                        using (var stream = new FileStream(path, FileMode.Create))
-                            await imageFile.CopyToAsync(stream);
-                        variant.ImageUrl = "/uploads/" + fileName;
+                        using var stream = imageFile.OpenReadStream();
+                        var uploadParams = new ImageUploadParams
+                        {
+                            File = new FileDescription(imageFile.FileName, stream),
+                            Folder = "uploads/images"
+                        };
+                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                        variant.ImageUrl = uploadResult.SecureUrl.ToString();
                     }
                     else if (!string.IsNullOrEmpty(imageUrl))
                     {
                         variant.ImageUrl = imageUrl;
                     }
 
-                    // ✅ Nếu có model mới → ghi đè model cũ
+                    // 🧱 Upload model mới nếu có
                     if (modelFile != null && modelFile.Length > 0)
                     {
-                        string fileName = Guid.NewGuid() + Path.GetExtension(modelFile.FileName);
-                        string path = Path.Combine(uploadPath, fileName);
-                        using (var stream = new FileStream(path, FileMode.Create))
-                            await modelFile.CopyToAsync(stream);
-                        variant.ModelUrl = "/uploads/" + fileName;
+                        using var stream = modelFile.OpenReadStream();
+                        var uploadParams = new RawUploadParams
+                        {
+                            File = new FileDescription(modelFile.FileName, stream),
+                            Folder = "uploads/models"
+                        };
+                        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                        variant.ModelUrl = uploadResult.SecureUrl.ToString();
                     }
                     else if (!string.IsNullOrEmpty(modelUrl))
                     {
@@ -395,7 +416,7 @@ namespace ProjectApi.Controllers
                     }
                 }
 
-                // Đồng bộ lại tên biến thể
+                // 🔄 Cập nhật lại tên variant theo tên cha
                 foreach (var v in product.Variants)
                 {
                     if (!string.IsNullOrEmpty(v.Name))
@@ -409,6 +430,7 @@ namespace ProjectApi.Controllers
             await _context.SaveChangesAsync();
             return Ok("✅ Cập nhật sản phẩm và biến thể thành công!");
         }
+
 
 
 

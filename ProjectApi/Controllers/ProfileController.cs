@@ -6,6 +6,9 @@ using ProjectApi.Models;
 using ProjectApi.Dtos;
 using System.Security.Claims;
 using BCrypt.Net;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
 
 namespace ProjectApi.Controllers
 {
@@ -16,6 +19,7 @@ namespace ProjectApi.Controllers
     {
         private readonly FurnitureDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly Cloudinary _cloudinary;
 
         public ProfileController(FurnitureDbContext context, IWebHostEnvironment env)
         {
@@ -88,40 +92,47 @@ namespace ProjectApi.Controllers
             return Ok(new { message = "Password changed successfully" });
         }
 
-        // ✅ Upload ảnh đại diện
+        // ✅ Upload ảnh đại diện lên Cloudinary
         [HttpPost("avatar")]
         [RequestSizeLimit(10_000_000)] // 10MB
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadAvatar(IFormFile file)
         {
-            if (file == null || file.Length == 0) return BadRequest("No file uploaded");
+            if (file == null || file.Length == 0)
+                return BadRequest("Không có file được tải lên.");
 
             var allowed = new[] { ".jpg", ".jpeg", ".png", ".webp" };
             var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
-            if (!allowed.Contains(ext)) return BadRequest("File type not allowed");
+            if (!allowed.Contains(ext))
+                return BadRequest("Định dạng file không hợp lệ.");
 
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(userIdClaim, out int userId))
                 return Unauthorized("Invalid user ID");
 
             var user = await _context.Users.FindAsync(userId);
-            if (user == null) return NotFound("User not found");
+            if (user == null)
+                return NotFound("User not found");
 
-            var uploadPath = Path.Combine(_env.WebRootPath ?? "wwwroot", "avatars");
-            if (!Directory.Exists(uploadPath))
-                Directory.CreateDirectory(uploadPath);
-
-            var fileName = $"{Guid.NewGuid()}{ext}";
-            var path = Path.Combine(uploadPath, fileName);
-            using (var stream = new FileStream(path, FileMode.Create))
+            // 🔹 Upload lên Cloudinary
+            using var stream = file.OpenReadStream();
+            var uploadParams = new ImageUploadParams
             {
-                await file.CopyToAsync(stream);
-            }
+                File = new FileDescription(file.FileName, stream),
+                Folder = "avatars"
+            };
 
-            user.AvatarUrl = $"/avatars/{fileName}";
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            if (uploadResult.Error != null)
+                return BadRequest(uploadResult.Error.Message);
+
+            // 🔹 Lưu URL vào DB
+            user.AvatarUrl = uploadResult.SecureUrl.ToString();
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
             return Ok(new { avatarUrl = user.AvatarUrl });
         }
+
     }
 }

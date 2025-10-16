@@ -612,6 +612,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProjectApi.Controllers.UploadController",
+    "Method": "UploadFile",
+    "RelativePath": "api/Upload/file",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ProjectApi.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",
