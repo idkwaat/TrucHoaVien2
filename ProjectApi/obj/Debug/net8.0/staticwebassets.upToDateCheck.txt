@@ -59,3 +59,5 @@ wwwroot\uploads\ad1dd83b-e5d2-4cd1-ab18-23c5665d7b7f.glb
 wwwroot\uploads\b37ac96c-a3c7-4339-b06c-14a7d4a329a7.jpg
 wwwroot\uploads\7cf692a3-b7c6-42a4-b4d9-b85e89d30a31.png
 wwwroot\uploads\d0ed959a-a8df-4bd2-83c3-fc0b7f490a5f.glb
+wwwroot\uploads\3fe4eaeb-c84a-42b2-ae71-a4d54d85270e.png
+wwwroot\uploads\460d38af-5a80-4ecb-a69d-d4a1b9549686.glb

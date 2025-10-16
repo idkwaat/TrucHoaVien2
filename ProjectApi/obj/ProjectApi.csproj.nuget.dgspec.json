@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.27.8, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.8, )"
@@ -95,6 +99,10 @@
             "X.PagedList.Mvc.Core": {
               "target": "Package",
               "version": "[10.5.9, )"
+            },
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[4.0.0, )"
             }
           },
           "imports": [

@@ -6,10 +6,24 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProjectApi.Data;
+using ProjectApi.Models; // ✅ thêm dòng này
 using ProjectApi.Services;
 using System.Text;
+using CloudinaryDotNet;
+using Microsoft.Extensions.Options;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args); // ✅ chỉ giữ 1 dòng này
+
+// Đọc config
+builder.Services.Configure<CloudinarySettings>(
+    builder.Configuration.GetSection("CloudinarySettings"));
+
+// Tạo instance Cloudinary dùng DI
+builder.Services.AddSingleton(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+    return new Cloudinary(new Account(settings.CloudName, settings.ApiKey, settings.ApiSecret));
+});
 
 // ====================
 // 🔹 Controllers & Swagger

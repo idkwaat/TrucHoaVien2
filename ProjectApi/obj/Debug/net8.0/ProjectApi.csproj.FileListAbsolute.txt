@@ -185,3 +185,5 @@ C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\Npgsql.Entity
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\ProjectApi.sourcelink.json
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\dotenv.net.dll
