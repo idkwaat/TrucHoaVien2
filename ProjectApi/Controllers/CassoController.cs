@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 using ProjectApi.Data; // namespace DbContext của bạn
 using ProjectApi.Models;
 using System.Text.Json;
+using Microsoft.AspNetCore.SignalR;
+using ProjectApi.Hubs;
+
 
 namespace ProjectApi.Controllers
 {
@@ -14,12 +17,14 @@ namespace ProjectApi.Controllers
         private readonly FurnitureDbContext _context;
         private readonly ILogger<CassoController> _logger;
         private readonly IConfiguration _config;
+        private readonly IHubContext<PaymentsHub> _hub;
 
-        public CassoController(FurnitureDbContext context, ILogger<CassoController> logger, IConfiguration config)
+        public CassoController(FurnitureDbContext context, ILogger<CassoController> logger, IConfiguration config, IHubContext<PaymentsHub> hub)
         {
             _context = context;
             _logger = logger;
             _config = config;
+            _hub = hub;
         }
 
         [HttpPost("webhook")]
@@ -73,6 +78,15 @@ namespace ProjectApi.Controllers
                         await _context.SaveChangesAsync();
 
                         _logger.LogInformation($"✅ Đơn hàng {order.Id} đã thanh toán thành công ({amount}đ)");
+
+                        await _hub.Clients.Group($"order-{order.Id}")
+    .SendAsync("PaymentSuccess", new
+    {
+        orderId = order.Id,
+        amount,
+        message = "Thanh toán thành công"
+    });
+
                     }
                 }
                 else
@@ -102,5 +116,7 @@ namespace ProjectApi.Controllers
             catch { }
             return null;
         }
+
+
     }
 }

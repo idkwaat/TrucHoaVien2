@@ -187,3 +187,4 @@ C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.d
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\CloudinaryDotNet.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\dotenv.net.dll
+C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

@@ -11,8 +11,11 @@ using ProjectApi.Services;
 using System.Text;
 using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
+using ProjectApi.Hubs;
+
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSignalR();
 
 // ====================
 // 🔹 Cho phép upload file lớn (500MB)
@@ -146,6 +149,7 @@ var app = builder.Build();
 // app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
+app.MapHub<PaymentsHub>("/hubs/payments");
 app.UseAuthentication();
 app.UseAuthorization();
 
