@@ -187,4 +187,3 @@ C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\X.PagedList.M
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\CloudinaryDotNet.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\dotenv.net.dll
 C:\Users\kienv\source\repos\ProjectApi\ProjectApi\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
-C:\Users\kienv\source\repos\ProjectApi\ProjectApi\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
