@@ -31,12 +31,17 @@ namespace ProjectApi.Controllers
                 string token = Request.Headers["X-Webhook-Token"];
                 string expected = _config["Casso:Token"];
 
-                if (token != expected)
+                // 👇 Cho phép gọi thử (không có token) vẫn qua
+                if (string.IsNullOrEmpty(token))
+                {
+                    _logger.LogWarning("⚠️ Không có header X-Webhook-Token (có thể do gọi thử). Bỏ qua xác thực.");
+                }
+                else if (token != expected)
                 {
                     _logger.LogWarning("❌ Webhook token không hợp lệ!");
-                    _logger.LogInformation($"Header: {token}, Expected: {expected}");
                     return Unauthorized();
                 }
+
 
 
                 // 🧾 Log dữ liệu
