@@ -1,0 +1,9 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ProjectApi",
+    "\\ProjectApi\\Migrations"
+  ],
+  "SelectedNode": "\\ProjectApi\\Migrations\\20251017180341_AddPaymentFieldsToOrders.cs",
+  "PreviewInSolutionExplorer": false
+}
