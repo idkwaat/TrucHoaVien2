@@ -68,7 +68,13 @@ public class OrdersController : ControllerBase
         await _context.OrderItems.AddRangeAsync(items);
         await _context.SaveChangesAsync();
 
-        return Ok(new { message = "Order created successfully", orderId = order.Id });
+        return Ok(new
+        {
+            message = "Order created successfully",
+            id = order.Id,
+            totalAmount = order.Total
+        });
+
     }
 
     // ✅ Chỉ admin được quyền đổi trạng thái
