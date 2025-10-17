@@ -34,6 +34,9 @@ builder.Services.Configure<FormOptions>(options =>
 builder.Services.Configure<CloudinarySettings>(
     builder.Configuration.GetSection("CloudinarySettings"));
 
+builder.Services.AddHostedService<ProjectApi.Services.PendingOrderCleanupService>();
+
+
 builder.Services.AddSingleton(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
