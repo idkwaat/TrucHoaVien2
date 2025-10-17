@@ -23,5 +23,9 @@ namespace ProjectApi.Models
         public User? User { get; set; }
 
         public ICollection<OrderItem>? Items { get; set; }
+
+        public string? PaymentTransactionId { get; set; }
+        public decimal? PaymentAmount { get; set; }
+        public DateTime? PaidAt { get; set; }
     }
 }
