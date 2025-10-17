@@ -7,38 +7,6 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Migrations\\20251017180341_AddPaymentFieldsToOrders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\migrations\\20251017173553_addpaidattoorders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\migrations\\20251017173553_addpaidattoorders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\cassocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\cassocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\hubs\\paymentshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\hubs\\paymentshub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\migrations\\20251017154538_initsync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\migrations\\20251017154538_initsync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\helpers\\controllerextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\helpers\\controllerextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017154159_SkipInit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Migrations\\20251017154159_SkipInit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -47,123 +15,155 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Migrations\\20251017154003_InitPostgres.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\data\\furnituredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\data\\furnituredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\productupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\productupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\productcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\productcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\productdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\uploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\uploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\cloudinarysettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\variantdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\variantdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\reviewcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\reviewcreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\frontend\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\reviewcontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\reviewcontoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Hubs\\PaymentsHub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Hubs\\PaymentsHub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\productvarient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\productvarient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductUpdateDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\ProductUpdateDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\ProductVarient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\ProductVarient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Helpers\\ControllerExtensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Helpers\\ControllerExtensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\Order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017173553_AddPaidAtToOrders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Migrations\\20251017173553_AddPaidAtToOrders.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\changepassworddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CassoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\CassoController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\userprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\userprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017154538_InitSync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Migrations\\20251017154538_InitSync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\OrdersController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\OrdersController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\orderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\orderrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProductsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\ProductsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\orderitemrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\orderitemrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\OrderItem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\OrderItem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Data\\FurnitureDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Data\\FurnitureDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProfileController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\ProfileController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductCreateDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\ProductCreateDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\ProductDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\UploadController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\UploadController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\CloudinarySettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\CloudinarySettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ReviewCreateDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\ReviewCreateDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\VariantDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\VariantDTO.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ReviewContoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\ReviewContoller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\RegisterDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\RegisterDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\Product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CategoriesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\CategoriesController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\Review.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ReviewDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\ReviewDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CartController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Controllers\\CartController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\UpdateUserDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\UpdateUserDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ChangePasswordDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\ChangePasswordDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\UserProfileDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\UserProfileDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Services\\TokenService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Services\\TokenService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\OrderRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\OrderRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\OrderItemRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Dtos\\OrderItemRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\CartItem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ProjectApi\\Models\\CartItem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -190,7 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "PaymentsHub.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Hubs\\PaymentsHub.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Hubs\\PaymentsHub.cs",
@@ -202,7 +202,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 2,
               "Title": "20251017154003_InitPostgres.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017154003_InitPostgres.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Migrations\\20251017154003_InitPostgres.cs",
@@ -214,7 +214,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Program.cs",
@@ -222,12 +222,11 @@
               "RelativeToolTip": "ProjectApi\\Program.cs",
               "ViewState": "AgIAAJkAAAAAAAAAAAAmwLEAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T05:06:55.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T05:06:55.593Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 6,
               "Title": "ProductUpdateDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductUpdateDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ProductUpdateDto.cs",
@@ -239,7 +238,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 7,
               "Title": "ProductVarient.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\ProductVarient.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\ProductVarient.cs",
@@ -251,7 +250,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\appsettings.json",
               "RelativeDocumentMoniker": "ProjectApi\\appsettings.json",
@@ -263,7 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ControllerExtensions.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Helpers\\ControllerExtensions.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Helpers\\ControllerExtensions.cs",
@@ -275,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 10,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Order.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Order.cs",
@@ -283,12 +282,11 @@
               "RelativeToolTip": "ProjectApi\\Models\\Order.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAzwB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T13:14:50.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-09T13:14:50.301Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "20251017173553_AddPaidAtToOrders.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017173553_AddPaidAtToOrders.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Migrations\\20251017173553_AddPaidAtToOrders.cs",
@@ -300,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "CassoController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CassoController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\CassoController.cs",
@@ -312,7 +310,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "20251017154159_SkipInit.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017154159_SkipInit.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Migrations\\20251017154159_SkipInit.cs",
@@ -324,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "20251017154538_InitSync.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Migrations\\20251017154538_InitSync.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Migrations\\20251017154538_InitSync.cs",
@@ -336,7 +334,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 14,
               "Title": "OrdersController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\OrdersController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\OrdersController.cs",
@@ -348,7 +346,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "ProductsController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProductsController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProductsController.cs",
@@ -360,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "OrderItem.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\OrderItem.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\OrderItem.cs",
@@ -372,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "FurnitureDbContext.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Data\\FurnitureDbContext.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Data\\FurnitureDbContext.cs",
@@ -384,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "ProfileController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProfileController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProfileController.cs",
@@ -396,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "ProductCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductCreateDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ProductCreateDto.cs",
@@ -408,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 20,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\AuthController.cs",
@@ -420,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 21,
               "Title": "ProductDTO.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductDTO.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ProductDTO.cs",
@@ -432,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "UploadController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\UploadController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\UploadController.cs",
@@ -444,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "CloudinarySettings.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\CloudinarySettings.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\CloudinarySettings.cs",
@@ -456,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "ReviewCreateDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ReviewCreateDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\ReviewCreateDto.cs",
@@ -468,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "VariantDTO.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\VariantDTO.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\VariantDTO.cs",
@@ -480,7 +478,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\User.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\User.cs",
@@ -504,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "RegisterDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\RegisterDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\RegisterDto.cs",
@@ -516,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Product.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Product.cs",
@@ -528,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 3,
               "Title": "package.json",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\frontend\\package.json",
               "RelativeDocumentMoniker": "..\\frontend\\package.json",
@@ -552,7 +550,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 31,
               "Title": "Review.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Review.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Review.cs",
@@ -576,7 +574,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "CartController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\CartController.cs",

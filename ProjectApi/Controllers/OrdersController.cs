@@ -24,6 +24,7 @@ public class OrdersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateOrder([FromBody] OrderRequest req)
     {
+        Console.WriteLine("📦 Nhận request tạo đơn hàng!");
         if (req == null || req.Items == null || req.Items.Count == 0)
             return BadRequest("Invalid order data");
 

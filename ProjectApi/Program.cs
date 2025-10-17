@@ -119,19 +119,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ✅ Bỏ chặn preflight request (tránh lỗi 502 trên Render)
-app.Use(async (context, next) =>
-{
-    if (context.Request.Method == "OPTIONS")
-    {
-        context.Response.Headers.Add("Access-Control-Allow-Origin", "https://truchoavien.vercel.app");
-        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        context.Response.StatusCode = 204; // No content
-        return;
-    }
-    await next();
-});
 
 app.UseRouting();
 app.UseCors("AllowFrontend");
