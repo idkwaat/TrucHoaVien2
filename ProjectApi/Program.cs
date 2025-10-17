@@ -13,7 +13,6 @@ using CloudinaryDotNet;
 using Microsoft.Extensions.Options;
 using ProjectApi.Hubs;
 
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
 
@@ -26,7 +25,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 524_288_000; // 500MB
+    options.MultipartBodyLengthLimit = 524_288_000;
 });
 
 // ====================
@@ -101,15 +100,16 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // ====================
-// 🔹 CORS (Render + local)
+// 🔹 CORS (Render + local + Vercel)
 // ====================
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-            "https://truchoavien.vercel.app",  // domain Vercel
-            "http://localhost:5173"            // local dev
+            "https://truchoavien.vercel.app", // domain Vercel
+            "http://localhost:5173",          // local dev
+            "http://localhost:3000"           // fallback local
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -119,16 +119,24 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ✅ Thứ tự middleware cực kỳ quan trọng
+// ✅ Bỏ chặn preflight request (tránh lỗi 502 trên Render)
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.Headers.Add("Access-Control-Allow-Origin", "https://truchoavien.vercel.app");
+        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.StatusCode = 204; // No content
+        return;
+    }
+    await next();
+});
+
 app.UseRouting();
-
 app.UseCors("AllowFrontend");
-
 app.UseAuthentication();
 app.UseAuthorization();
-
-// ✅ SignalR phải nằm sau CORS + Auth
-app.MapHub<PaymentsHub>("/hubs/payments");
 
 // ====================
 // 🔹 Static files
@@ -154,9 +162,13 @@ app.UseStaticFiles(new StaticFileOptions
     ServeUnknownFileTypes = true
 });
 
+// ====================
+// 🔹 Swagger + Controllers + Hubs
+// ====================
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.MapHub<PaymentsHub>("/hubs/payments");
 
 // ====================
 // 🔹 Auto-migrate database
