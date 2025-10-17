@@ -112,7 +112,7 @@ namespace ProjectApi.Controllers
                 order.Status = "Paid";
                 order.PaymentTransactionId = transactionId;
                 order.PaymentAmount = amount;
-                order.PaidAt = DateTime.Now;
+                order.PaidAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation($"✅ Đơn hàng {order.Id} đã thanh toán thành công ({amount}đ)");
