@@ -27,14 +27,17 @@ namespace ProjectApi.Controllers
             try
             {
                 // ✅ Xác thực token
-                string token = Request.Headers["Authorization"];
-                string expected = "Bearer " + _config["Casso:Token"];
+                // ✅ Casso gửi key trong header: X-Webhook-Token
+                string token = Request.Headers["X-Webhook-Token"];
+                string expected = _config["Casso:Token"];
 
                 if (token != expected)
                 {
                     _logger.LogWarning("❌ Webhook token không hợp lệ!");
+                    _logger.LogInformation($"Header: {token}, Expected: {expected}");
                     return Unauthorized();
                 }
+
 
                 // 🧾 Log dữ liệu
                 string json = JsonConvert.SerializeObject(data);
