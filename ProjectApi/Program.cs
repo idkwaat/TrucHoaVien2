@@ -119,9 +119,33 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// ====================
+// 🔹 HTTPS redirect
+// ====================
+app.UseHttpsRedirection();
 
+// ====================
+// 🔹 Routing + CORS + Auth
+// ====================
 app.UseRouting();
+
+// ⚠️ CORS PHẢI đứng NGAY sau UseRouting
 app.UseCors("AllowFrontend");
+
+// ✅ Xử lý preflight request để tránh lỗi 502 (Render hay bị)
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.Headers.Add("Access-Control-Allow-Origin", "https://truchoavien.vercel.app");
+        context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        context.Response.StatusCode = 204; // No content
+        return;
+    }
+    await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -154,6 +178,7 @@ app.UseStaticFiles(new StaticFileOptions
 // ====================
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.MapControllers();
 app.MapHub<PaymentsHub>("/hubs/payments");
 
@@ -175,3 +200,4 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
