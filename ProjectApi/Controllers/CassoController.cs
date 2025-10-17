@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using ProjectApi.Data; // namespace DbContext của bạn
-using ProjectApi.Models;
-using System.Text.Json;
 using Microsoft.AspNetCore.SignalR;
+using ProjectApi.Data;
+using ProjectApi.Models;
 using ProjectApi.Hubs;
-
+using System.Text.Json;
 
 namespace ProjectApi.Controllers
 {
@@ -19,7 +17,11 @@ namespace ProjectApi.Controllers
         private readonly IConfiguration _config;
         private readonly IHubContext<PaymentsHub> _hub;
 
-        public CassoController(FurnitureDbContext context, ILogger<CassoController> logger, IConfiguration config, IHubContext<PaymentsHub> hub)
+        public CassoController(
+            FurnitureDbContext context,
+            ILogger<CassoController> logger,
+            IConfiguration config,
+            IHubContext<PaymentsHub> hub)
         {
             _context = context;
             _logger = logger;
@@ -32,6 +34,7 @@ namespace ProjectApi.Controllers
         {
             try
             {
+                // ✅ Kiểm tra token xác thực webhook
                 string token = Request.Headers["X-Webhook-Token"];
                 string expected = _config["Casso:Token"];
 
@@ -47,51 +50,30 @@ namespace ProjectApi.Controllers
 
                 _logger.LogInformation($"📩 Nhận từ Casso: {data}");
 
-                // ✅ Casso gửi trong field "data" (array of transactions)
-                if (data.TryGetProperty("data", out JsonElement dataArray) && dataArray.ValueKind == JsonValueKind.Array)
+                // ✅ Kiểm tra và đọc trường "data"
+                if (data.TryGetProperty("data", out JsonElement dataElement))
                 {
-                    foreach (var item in dataArray.EnumerateArray())
+                    if (dataElement.ValueKind == JsonValueKind.Array)
                     {
-                        decimal amount = item.GetProperty("amount").GetDecimal();
-                        string description = item.GetProperty("description").GetString() ?? "";
-                        string transactionId = item.GetProperty("id").GetString() ?? "";
-
-                        int? orderId = TryParseOrderId(description);
-                        if (orderId == null)
+                        // Casso gửi nhiều giao dịch cùng lúc
+                        foreach (var item in dataElement.EnumerateArray())
                         {
-                            _logger.LogWarning($"⚠️ Không tìm được mã đơn hàng từ description: {description}");
-                            continue;
+                            await HandleTransaction(item);
                         }
-
-                        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId.Value);
-                        if (order == null)
-                        {
-                            _logger.LogWarning($"⚠️ Không tìm thấy đơn hàng ID={orderId}");
-                            continue;
-                        }
-
-                        order.Status = "Paid";
-                        order.PaymentTransactionId = transactionId;
-                        order.PaymentAmount = amount;
-                        order.PaidAt = DateTime.Now;
-
-                        await _context.SaveChangesAsync();
-
-                        _logger.LogInformation($"✅ Đơn hàng {order.Id} đã thanh toán thành công ({amount}đ)");
-
-                        await _hub.Clients.Group($"order-{order.Id}")
-    .SendAsync("PaymentSuccess", new
-    {
-        orderId = order.Id,
-        amount,
-        message = "Thanh toán thành công"
-    });
-
+                    }
+                    else if (dataElement.ValueKind == JsonValueKind.Object)
+                    {
+                        // Casso gửi 1 giao dịch duy nhất
+                        await HandleTransaction(dataElement);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("⚠️ 'data' không phải object hoặc array hợp lệ");
                     }
                 }
                 else
                 {
-                    _logger.LogWarning("⚠️ Payload không có trường 'data' hoặc không phải array");
+                    _logger.LogWarning("⚠️ Payload không có trường 'data'");
                 }
 
                 return Ok(new { success = true });
@@ -103,8 +85,54 @@ namespace ProjectApi.Controllers
             }
         }
 
+        // 🧩 Hàm xử lý từng giao dịch Casso
+        private async Task HandleTransaction(JsonElement item)
+        {
+            try
+            {
+                decimal amount = item.GetProperty("amount").GetDecimal();
+                string description = item.GetProperty("description").GetString() ?? "";
+                string transactionId = item.GetProperty("id").GetRawText();
 
-        // 🧩 Hàm phụ: trích ID đơn hàng từ description (VD: “Thanh toan DH_123”)
+                int? orderId = TryParseOrderId(description);
+                if (orderId == null)
+                {
+                    _logger.LogWarning($"⚠️ Không tìm được mã đơn hàng từ description: {description}");
+                    return;
+                }
+
+                var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId.Value);
+                if (order == null)
+                {
+                    _logger.LogWarning($"⚠️ Không tìm thấy đơn hàng ID={orderId}");
+                    return;
+                }
+
+                // ✅ Cập nhật trạng thái đơn hàng
+                order.Status = "Paid";
+                order.PaymentTransactionId = transactionId;
+                order.PaymentAmount = amount;
+                order.PaidAt = DateTime.Now;
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation($"✅ Đơn hàng {order.Id} đã thanh toán thành công ({amount}đ)");
+
+                // ✅ Gửi thông báo realtime qua SignalR
+                await _hub.Clients.Group($"order-{order.Id}")
+                    .SendAsync("PaymentSuccess", new
+                    {
+                        orderId = order.Id,
+                        amount,
+                        message = "Thanh toán thành công"
+                    });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "❌ Lỗi xử lý transaction Casso");
+            }
+        }
+
+        // 🧩 Trích ID đơn hàng từ mô tả (VD: "DH_123" hoặc "DH123")
         private int? TryParseOrderId(string desc)
         {
             try
@@ -116,7 +144,5 @@ namespace ProjectApi.Controllers
             catch { }
             return null;
         }
-
-
     }
 }
