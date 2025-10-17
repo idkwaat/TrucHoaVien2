@@ -49,36 +49,10 @@ builder.Services.AddControllers(options =>
     options.SuppressAsyncSuffixInActionNames = false;
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project API", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "Nhập JWT token theo định dạng: Bearer {token}",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new List<string>()
-        }
-    });
-});
+builder.Services.AddSwaggerGen();
 
 // ====================
-// 🔹 Database setup (Render/Postgres hoặc local)
+// 🔹 Database setup
 // ====================
 var connectionString =
     Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
@@ -134,8 +108,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-            "https://truchoavien.vercel.app",
-            "http://localhost:5173"
+            "https://truchoavien.vercel.app",  // domain Vercel
+            "http://localhost:5173"            // local dev
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -145,16 +119,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ⚠️ Render đã có HTTPS proxy, nên KHÔNG cần dòng này:
-// app.UseHttpsRedirection();
+// ✅ Thứ tự middleware cực kỳ quan trọng
+app.UseRouting();
 
 app.UseCors("AllowFrontend");
-app.MapHub<PaymentsHub>("/hubs/payments");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
+// ✅ SignalR phải nằm sau CORS + Auth
+app.MapHub<PaymentsHub>("/hubs/payments");
+
 // ====================
-// 🔹 Static file cho .glb, .gltf
+// 🔹 Static files
 // ====================
 var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 var uploadsPath = Path.Combine(wwwrootPath, "uploads");
@@ -174,12 +151,7 @@ app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(wwwrootPath),
     ContentTypeProvider = provider,
-    ServeUnknownFileTypes = true,
-    OnPrepareResponse = ctx =>
-    {
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-        ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    }
+    ServeUnknownFileTypes = true
 });
 
 app.UseSwagger();
