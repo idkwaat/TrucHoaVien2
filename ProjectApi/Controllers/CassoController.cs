@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProjectApi.Data; // namespace DbContext của bạn
 using ProjectApi.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace ProjectApi.Controllers
 {
@@ -22,16 +23,13 @@ namespace ProjectApi.Controllers
         }
 
         [HttpPost("webhook")]
-        public async Task<IActionResult> Webhook([FromBody] dynamic data)
+        public async Task<IActionResult> Webhook([FromBody] JsonElement data)
         {
             try
             {
-                // ✅ Xác thực token
-                // ✅ Casso gửi key trong header: X-Webhook-Token
                 string token = Request.Headers["X-Webhook-Token"];
                 string expected = _config["Casso:Token"];
 
-                // 👇 Cho phép gọi thử (không có token) vẫn qua
                 if (string.IsNullOrEmpty(token))
                 {
                     _logger.LogWarning("⚠️ Không có header X-Webhook-Token (có thể do gọi thử). Bỏ qua xác thực.");
@@ -42,42 +40,45 @@ namespace ProjectApi.Controllers
                     return Unauthorized();
                 }
 
+                _logger.LogInformation($"📩 Nhận từ Casso: {data}");
 
-
-                // 🧾 Log dữ liệu
-                string json = JsonConvert.SerializeObject(data);
-                _logger.LogInformation($"📩 Nhận từ Casso: {json}");
-
-                // 📦 Lấy thông tin chính
-                decimal amount = data.amount;
-                string description = data.description;
-                string transactionId = data.transaction_id;
-
-                // 💡 Giả sử bạn ghi "Thanh toan DH_123" trong mô tả khi tạo QR
-                // -> ta tìm theo mã đơn hàng đó
-                int? orderId = TryParseOrderId(description);
-                if (orderId == null)
+                // ✅ Casso gửi trong field "data" (array of transactions)
+                if (data.TryGetProperty("data", out JsonElement dataArray) && dataArray.ValueKind == JsonValueKind.Array)
                 {
-                    _logger.LogWarning($"⚠️ Không tìm được mã đơn hàng từ description: {description}");
-                    return Ok(new { success = false });
-                }
+                    foreach (var item in dataArray.EnumerateArray())
+                    {
+                        decimal amount = item.GetProperty("amount").GetDecimal();
+                        string description = item.GetProperty("description").GetString() ?? "";
+                        string transactionId = item.GetProperty("id").GetString() ?? "";
 
-                var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId.Value);
-                if (order == null)
+                        int? orderId = TryParseOrderId(description);
+                        if (orderId == null)
+                        {
+                            _logger.LogWarning($"⚠️ Không tìm được mã đơn hàng từ description: {description}");
+                            continue;
+                        }
+
+                        var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId.Value);
+                        if (order == null)
+                        {
+                            _logger.LogWarning($"⚠️ Không tìm thấy đơn hàng ID={orderId}");
+                            continue;
+                        }
+
+                        order.Status = "Paid";
+                        order.PaymentTransactionId = transactionId;
+                        order.PaymentAmount = amount;
+                        order.PaidAt = DateTime.Now;
+
+                        await _context.SaveChangesAsync();
+
+                        _logger.LogInformation($"✅ Đơn hàng {order.Id} đã thanh toán thành công ({amount}đ)");
+                    }
+                }
+                else
                 {
-                    _logger.LogWarning($"⚠️ Không tìm thấy đơn hàng ID={orderId}");
-                    return Ok(new { success = false });
+                    _logger.LogWarning("⚠️ Payload không có trường 'data' hoặc không phải array");
                 }
-
-                // ✅ Cập nhật trạng thái
-                order.Status = "Paid";
-                order.PaymentTransactionId = transactionId;
-                order.PaymentAmount = amount;
-                order.PaidAt = DateTime.Now;
-
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation($"✅ Đơn hàng {order.Id} đã thanh toán thành công ({amount}đ)");
 
                 return Ok(new { success = true });
             }
@@ -87,6 +88,7 @@ namespace ProjectApi.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
 
         // 🧩 Hàm phụ: trích ID đơn hàng từ description (VD: “Thanh toan DH_123”)
         private int? TryParseOrderId(string desc)
