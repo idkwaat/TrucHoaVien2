@@ -10,11 +10,11 @@ namespace ProjectApi.Controllers
     [Route("api/[controller]")]
     public class CassoController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly FurnitureDbContext _context;
         private readonly ILogger<CassoController> _logger;
         private readonly IConfiguration _config;
 
-        public CassoController(ApplicationDbContext context, ILogger<CassoController> logger, IConfiguration config)
+        public CassoController(FurnitureDbContext context, ILogger<CassoController> logger, IConfiguration config)
         {
             _context = context;
             _logger = logger;
