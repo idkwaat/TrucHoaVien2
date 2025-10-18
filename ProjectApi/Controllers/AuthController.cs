@@ -58,14 +58,23 @@ namespace ProjectApi.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
-                return Unauthorized("Invalid username or password");
+            if (string.IsNullOrWhiteSpace(dto.Username) || string.IsNullOrWhiteSpace(dto.Password))
+                return BadRequest("Vui lòng nhập đầy đủ thông tin đăng nhập");
 
-            // ✅ Tạo token chuẩn có NameIdentifier
+            // ✅ Cho phép đăng nhập bằng Username, Email hoặc Phone
+            var user = await _context.Users.FirstOrDefaultAsync(u =>
+                u.Username == dto.Username ||
+                u.Email == dto.Username ||
+                u.Phone == dto.Username);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
+                return Unauthorized("Sai tài khoản hoặc mật khẩu");
+
             var token = _tokenService.CreateAccessToken(user);
 
             return Ok(new { token });
         }
+
+
     }
 }
