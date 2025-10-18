@@ -26,13 +26,25 @@ namespace ProjectApi.Controllers
             var client = _httpFactory.CreateClient();
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_config["SePay:ApiToken"]}");
 
+            // Làm sạch tên khách hàng (bỏ dấu, khoảng trắng, viết hoa)
+            var cleanName = string.Join("", req.CustomerName
+                .ToUpper()
+                .Normalize(NormalizationForm.FormD)
+                .Where(c => char.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark));
+
+            cleanName = cleanName.Replace(" ", "").Replace("_", "");
+
+            // Gộp vào nội dung chuyển khoản
+            var content = $"{req.Description}_{cleanName}";
+
             var payload = new
             {
                 amount = req.Amount,
-                content = req.Description,
+                content, // ✅ DH13_PHUNGTOUYEN
                 referenceCode = orderRef,
                 note = "Thanh toan don hang",
             };
+
 
             var response = await client.PostAsync(
                 _config["SePay:CreatePaymentUrl"],
@@ -59,6 +71,8 @@ namespace ProjectApi.Controllers
     public class CreatePaymentRequest
     {
         public decimal Amount { get; set; }
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty; // VD: DH13
+        public string CustomerName { get; set; } = string.Empty; // ✅ Thêm dòng này
     }
+
 }
