@@ -7,6 +7,7 @@ using ProjectApi.Models;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -28,7 +29,6 @@ public class OrdersController : ControllerBase
         if (req == null || req.Items == null || req.Items.Count == 0)
             return BadRequest("Invalid order data");
 
-        // 🔥 Lấy userId từ claim trong token
         var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrEmpty(userIdClaim))
             return Unauthorized("User not authenticated");
@@ -36,11 +36,11 @@ public class OrdersController : ControllerBase
         if (!int.TryParse(userIdClaim, out int userId))
             return BadRequest("Invalid user ID format");
 
-        // ✅ Kiểm tra user có tồn tại thật không
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
             return Unauthorized("User not found");
 
+        // ✅ Tạo đơn hàng mới
         var order = new Order
         {
             CustomerName = req.CustomerName,
@@ -48,7 +48,7 @@ public class OrdersController : ControllerBase
             Phone = req.Phone,
             Email = req.Email,
             Total = req.TotalAmount,
-            OrderDate = DateTime.UtcNow, // dùng UTC nhất quán
+            OrderDate = DateTime.UtcNow,
             Status = "Pending",
             UserId = user.Id
         };
@@ -56,7 +56,7 @@ public class OrdersController : ControllerBase
         await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();
 
-        // ✅ Thêm OrderItems
+        // ✅ Thêm chi tiết sản phẩm
         var items = req.Items.Select(item => new OrderItem
         {
             OrderId = order.Id,
@@ -64,18 +64,30 @@ public class OrdersController : ControllerBase
             Quantity = item.Quantity,
             Price = item.Price
         });
-
         await _context.OrderItems.AddRangeAsync(items);
         await _context.SaveChangesAsync();
 
+        // ✅ Sinh nội dung chuyển khoản (SePay sẽ match cái này)
+        var transferContent = $"DH_{order.Id}";
+
+        // ✅ Sinh QR VietQR
+        const string BANK_ID = "970423"; // Mã ngân hàng TPBANK
+        const string ACCOUNT_NO = "26266363999";
+        const string ACCOUNT_NAME = "PHUNG TO UYEN";
+
+        var qrUrl =
+            $"https://img.vietqr.io/image/{BANK_ID}-{ACCOUNT_NO}-qr_only.png?amount={order.Total}&addInfo={transferContent}&accountName={Uri.EscapeDataString(ACCOUNT_NAME)}";
+
+        // ✅ Trả về cho frontend hiển thị
         return Ok(new
         {
-            message = "Order created successfully",
             id = order.Id,
-            totalAmount = order.Total
+            totalAmount = order.Total,
+            transferContent,
+            qrUrl
         });
-
     }
+
 
     // ✅ Chỉ admin được quyền đổi trạng thái
     [Authorize(Roles = "Admin")]

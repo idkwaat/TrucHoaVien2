@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Threading.Tasks;
 
 namespace ProjectApi.Hubs
 {
     public class PaymentsHub : Hub
     {
-        public async Task JoinGroup(string referenceCode)
+        public override async Task OnConnectedAsync()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, referenceCode);
-        }
+            var httpContext = Context.GetHttpContext();
+            var orderId = httpContext?.Request.Query["orderId"].ToString();
+            if (!string.IsNullOrEmpty(orderId))
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, $"DH_{orderId}");
+                Console.WriteLine($"👥 Client joined group DH_{orderId}");
+            }
 
-        public async Task LeaveGroup(string referenceCode)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, referenceCode);
+            await base.OnConnectedAsync();
         }
     }
 }

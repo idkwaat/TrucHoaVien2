@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using ProjectApi.Data;
 using ProjectApi.Hubs;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace ProjectApi.Controllers
 {
@@ -10,11 +13,13 @@ namespace ProjectApi.Controllers
     public class SePayController : ControllerBase
     {
         private readonly IHubContext<PaymentsHub> _hub;
+        private readonly FurnitureDbContext _context;
         private readonly string _webhookKey;
 
-        public SePayController(IHubContext<PaymentsHub> hub, IConfiguration cfg)
+        public SePayController(IHubContext<PaymentsHub> hub, FurnitureDbContext context, IConfiguration cfg)
         {
             _hub = hub;
+            _context = context;
             _webhookKey = cfg["SePay:WebhookKey"] ?? string.Empty;
         }
 
@@ -31,28 +36,48 @@ namespace ProjectApi.Controllers
 
             Console.WriteLine("📨 Webhook JSON: " + body.ToString());
 
-            if (!body.TryGetProperty("referenceCode", out var refProp) ||
-                !body.TryGetProperty("transferAmount", out var amtProp))
+            if (!body.TryGetProperty("transferAmount", out var amtProp) ||
+                !body.TryGetProperty("content", out var contentProp))
             {
-                return BadRequest("Thiếu trường cần thiết");
+                return BadRequest("Thiếu trường cần thiết (transferAmount, content)");
             }
 
-            var reference = refProp.GetString();
             var amount = amtProp.GetDecimal();
-            var content = body.TryGetProperty("content", out var c) ? c.GetString() : "";
+            var content = contentProp.GetString() ?? "";
 
-            Console.WriteLine($"✅ Nhận giao dịch: {reference} - {amount} - {content}");
-
-            await _hub.Clients.Group(reference!).SendAsync("PaymentStatus", new
+            // ✅ Lấy orderId từ nội dung chuyển khoản: "DH_123"
+            var match = Regex.Match(content, @"DH_(\d+)", RegexOptions.IgnoreCase);
+            if (!match.Success)
             {
-                reference,
+                Console.WriteLine("❌ Không tìm thấy mã đơn hàng trong nội dung: " + content);
+                return Ok(new { success = false, message = "No order ID found" });
+            }
+
+            var orderId = int.Parse(match.Groups[1].Value);
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order == null)
+            {
+                Console.WriteLine($"❌ Không tìm thấy đơn hàng {orderId}");
+                return NotFound(new { success = false, message = "Order not found" });
+            }
+
+            // ✅ Cập nhật trạng thái đơn hàng
+            order.Status = "Paid";
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine($"✅ Đơn hàng {orderId} đã thanh toán thành công ({amount}đ)");
+
+            // ✅ Gửi tín hiệu realtime về frontend
+            await _hub.Clients.Group($"DH_{orderId}").SendAsync("PaymentStatus", new
+            {
+                orderId,
                 amount,
                 content,
                 status = "success"
             });
 
-            return Ok(new { success = true });
-        }
 
+            return Ok(new { success = true, orderId });
+        }
     }
 }
