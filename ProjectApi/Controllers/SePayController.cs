@@ -8,12 +8,12 @@ namespace ProjectApi.Controllers
     public class SePayController : ControllerBase
     {
         // 🔑 API key bạn nhập trong SePay (phải khớp 100%)
-        private const string SEPAY_API_KEY = "Key-Truchoavien";
+        // 🔑 API key bạn cấu hình trên SePay Dashboard
+        private const string SEPAY_API_KEY = "Truchoavien"; // bỏ chữ "Key-" ra, chỉ giữ giá trị thực tế
 
         [HttpPost("webhook")]
         public IActionResult ReceiveWebhook([FromForm] IFormCollection form)
         {
-            // ✅ Xác thực API Key
             var authHeader = Request.Headers["Authorization"].FirstOrDefault();
 
             if (string.IsNullOrEmpty(authHeader))
@@ -22,33 +22,30 @@ namespace ProjectApi.Controllers
                 return Unauthorized("Missing Authorization header");
             }
 
-            if (authHeader != $"Apikey {SEPAY_API_KEY}")
+            // ✅ Hỗ trợ cả 2 kiểu Authorization header
+            var valid1 = authHeader == $"Key {SEPAY_API_KEY}";
+            var valid2 = authHeader == $"Bearer {SEPAY_API_KEY}";
+
+            if (!valid1 && !valid2)
             {
-                Console.WriteLine($"❌ Sai API key. Nhận: {authHeader}");
+                Console.WriteLine($"❌ Sai API key. Nhận được: '{authHeader}'");
                 return Unauthorized("Invalid API key");
             }
 
-            // ✅ In ra toàn bộ dữ liệu nhận được
-            Console.WriteLine("✅ Nhận webhook từ SePay (multipart/form-data):");
+
+            Console.WriteLine("✅ Xác thực thành công webhook từ SePay.");
+            Console.WriteLine("Dữ liệu nhận được:");
+
             foreach (var key in form.Keys)
-            {
                 Console.WriteLine($" - {key}: {form[key]}");
-            }
 
             try
             {
-                // Một số trường phổ biến mà SePay gửi
                 var amount = form["amount"].FirstOrDefault();
                 var content = form["content"].FirstOrDefault();
                 var reference = form["reference"].FirstOrDefault();
-                var bankCode = form["bank_code"].FirstOrDefault();
-                var accountNumber = form["account_number"].FirstOrDefault();
-                var transactionDate = form["transaction_date"].FirstOrDefault();
 
                 Console.WriteLine($"💰 Giao dịch {reference} - {amount}đ - Nội dung: {content}");
-                Console.WriteLine($"🏦 Ngân hàng: {bankCode}, TK: {accountNumber}, Ngày: {transactionDate}");
-
-                // 👉 TODO: xử lý cập nhật đơn hàng tại đây (ví dụ tìm đơn theo mã DHxxx trong content)
 
                 return Ok("OK");
             }
@@ -58,5 +55,6 @@ namespace ProjectApi.Controllers
                 return BadRequest("Error");
             }
         }
+
     }
 }
