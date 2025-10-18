@@ -19,74 +19,40 @@ namespace ProjectApi.Controllers
         }
 
         [HttpPost("webhook")]
-        public async Task<IActionResult> ReceiveWebhook()
+        public async Task<IActionResult> ReceiveWebhook([FromBody] JsonElement body)
         {
-            // 🧩 In tất cả headers để debug
-            Console.WriteLine("=== 📩 Headers từ SePay ===");
-            foreach (var h in Request.Headers)
-                Console.WriteLine($"{h.Key}: {h.Value}");
-            Console.WriteLine("============================");
-
-            // ✅ Kiểm tra Authorization header
             var authHeader = Request.Headers["Authorization"].FirstOrDefault()?.Trim();
-            if (string.IsNullOrEmpty(authHeader))
-            {
-                Console.WriteLine("❌ Thiếu header Authorization");
-                return Unauthorized("Missing Authorization header");
-            }
-
-            // ✅ So khớp chính xác với cấu hình trong appsettings.json
-            if (!authHeader.Equals($"Apikey {_webhookKey}", StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrEmpty(authHeader) ||
+                !authHeader.Equals($"Apikey {_webhookKey}", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine($"❌ Sai API key. Nhận được: {authHeader}");
                 return Unauthorized("Invalid API key");
             }
 
-            Console.WriteLine("✅ Xác thực API Key thành công!");
+            Console.WriteLine("📨 Webhook JSON: " + body.ToString());
 
-            // ✅ Đọc body JSON
-            using var reader = new StreamReader(Request.Body);
-            var body = await reader.ReadToEndAsync();
-
-            if (string.IsNullOrWhiteSpace(body))
-                return BadRequest("Empty body");
-
-            Console.WriteLine("📨 Body JSON từ SePay: " + body);
-
-            JsonDocument doc;
-            try
+            if (!body.TryGetProperty("referenceCode", out var refProp) ||
+                !body.TryGetProperty("transferAmount", out var amtProp))
             {
-                doc = JsonDocument.Parse(body);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Lỗi parse JSON: " + ex.Message);
-                return BadRequest("Invalid JSON");
+                return BadRequest("Thiếu trường cần thiết");
             }
 
-            var json = doc.RootElement;
+            var reference = refProp.GetString();
+            var amount = amtProp.GetDecimal();
+            var content = body.TryGetProperty("content", out var c) ? c.GetString() : "";
 
-            // ✅ Lấy dữ liệu từ SePay webhook
-            string? reference = json.GetProperty("referenceCode").GetString();
-            decimal amount = json.GetProperty("transferAmount").GetDecimal();
-            string? content = json.GetProperty("content").GetString();
+            Console.WriteLine($"✅ Nhận giao dịch: {reference} - {amount} - {content}");
 
-            Console.WriteLine($"💰 Nhận giao dịch: {reference} - {amount}đ - Nội dung: {content}");
-
-            // ✅ Phát sự kiện realtime qua SignalR
-            if (!string.IsNullOrEmpty(reference))
+            await _hub.Clients.Group(reference!).SendAsync("PaymentStatus", new
             {
-                await _hub.Clients.Group(reference).SendAsync("PaymentStatus", new
-                {
-                    reference,
-                    amount,
-                    content,
-                    status = "success"
-                });
-            }
+                reference,
+                amount,
+                content,
+                status = "success"
+            });
 
-            // ✅ Trả về OK để SePay ghi nhận webhook thành công
             return Ok(new { success = true });
         }
+
     }
 }

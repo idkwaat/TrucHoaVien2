@@ -189,8 +189,7 @@
               "RelativeToolTip": "ProjectApi\\Services\\SePayService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T08:18:21.268Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T08:18:21.268Z"
             },
             {
               "$type": "Document",
@@ -202,8 +201,7 @@
               "RelativeToolTip": "ProjectApi\\Models\\SePaySettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T08:17:52.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T08:17:52.67Z"
             },
             {
               "$type": "Document",
@@ -215,8 +213,7 @@
               "RelativeToolTip": "ProjectApi\\Controllers\\PaymentsController.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAmwEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T08:10:46.147Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T08:10:46.147Z"
             },
             {
               "$type": "Document",
@@ -226,7 +223,7 @@
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\SePayController.cs",
               "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\SePayController.cs",
               "RelativeToolTip": "ProjectApi\\Controllers\\SePayController.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAmwFwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAmwCYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-18T06:44:53.162Z",
               "EditorCaption": ""
@@ -277,8 +274,7 @@
               "RelativeToolTip": "ProjectApi\\Hubs\\PaymentsHub.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-17T16:03:54.705Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-17T16:03:54.705Z"
             },
             {
               "$type": "Document",
@@ -302,8 +298,7 @@
               "RelativeToolTip": "ProjectApi\\appsettings.json",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-11T04:24:15.504Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T04:24:15.504Z"
             },
             {
               "$type": "Document",
@@ -315,8 +310,7 @@
               "RelativeToolTip": "ProjectApi\\Program.cs",
               "ViewState": "AgIAAMoAAAAAAAAAAAAmwO8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T05:06:55.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T05:06:55.593Z"
             },
             {
               "$type": "Document",
