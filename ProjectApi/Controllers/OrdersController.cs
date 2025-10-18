@@ -20,7 +20,6 @@ public class OrdersController : ControllerBase
         _context = context;
     }
 
-    // ✅ Tạo đơn hàng
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateOrder([FromBody] OrderRequest req)
@@ -61,7 +60,7 @@ public class OrdersController : ControllerBase
         {
             OrderId = order.Id,
             ProductId = item.ProductId,
-            VariantId = item.VariantId,       // ✅ thêm
+            VariantId = item.VariantId,
             Quantity = item.Quantity,
             Price = item.Price
         });
@@ -69,16 +68,23 @@ public class OrdersController : ControllerBase
         await _context.OrderItems.AddRangeAsync(items);
         await _context.SaveChangesAsync();
 
-        // ✅ Sinh nội dung chuyển khoản (SePay sẽ match cái này)
-        var transferContent = $"DH_{order.Id}";
+        // ✅ Làm sạch tên khách (loại bỏ dấu và ký tự đặc biệt)
+        var cleanName = req.CustomerName
+            .Normalize(System.Text.NormalizationForm.FormD)
+            .Replace("đ", "d")
+            .Replace("Đ", "D");
+        cleanName = System.Text.RegularExpressions.Regex.Replace(cleanName, @"[^a-zA-Z0-9]", "").ToUpper();
 
-        // ✅ Sinh QR VietQR
+        // ✅ Sinh nội dung chuyển khoản (SePay sẽ match cái này)
+        var transferContent = $"DH{order.Id}-{cleanName}";
+
+        // ✅ Sinh QR VietQR — DÙNG `qr.png` để encode dữ liệu thật (không dùng `qr_only.png`)
         const string BANK_ID = "970423"; // Mã ngân hàng TPBANK
         const string ACCOUNT_NO = "26266363999";
         const string ACCOUNT_NAME = "PHUNG TO UYEN";
 
         var qrUrl =
-            $"https://img.vietqr.io/image/{BANK_ID}-{ACCOUNT_NO}-qr_only.png?amount={order.Total}&addInfo={transferContent}&accountName={Uri.EscapeDataString(ACCOUNT_NAME)}";
+            $"https://img.vietqr.io/image/{BANK_ID}-{ACCOUNT_NO}-qr.png?amount={order.Total}&addInfo={Uri.EscapeDataString(transferContent)}&accountName={Uri.EscapeDataString(ACCOUNT_NAME)}";
 
         // ✅ Trả về cho frontend hiển thị
         return Ok(new
@@ -89,6 +95,7 @@ public class OrdersController : ControllerBase
             qrUrl
         });
     }
+
 
 
     // ✅ Chỉ admin được quyền đổi trạng thái
