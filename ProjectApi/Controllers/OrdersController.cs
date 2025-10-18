@@ -61,9 +61,11 @@ public class OrdersController : ControllerBase
         {
             OrderId = order.Id,
             ProductId = item.ProductId,
+            VariantId = item.VariantId,       // ✅ thêm
             Quantity = item.Quantity,
             Price = item.Price
         });
+
         await _context.OrderItems.AddRangeAsync(items);
         await _context.SaveChangesAsync();
 
@@ -113,20 +115,19 @@ public class OrdersController : ControllerBase
         if (!int.TryParse(userIdClaim, out int userId))
             return Unauthorized("Invalid user ID");
 
-        // ✅ Lấy order (không include Items)
         var orders = await _context.Orders
             .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();
 
-        // ✅ Lấy items riêng (tránh lỗi mapping)
         var orderIds = orders.Select(o => o.Id).ToList();
         var orderItems = await _context.OrderItems
             .Where(i => orderIds.Contains(i.OrderId))
             .Include(i => i.Product)
+                .ThenInclude(p => p.Variants)
+            .Include(i => i.Variant)
             .ToListAsync();
 
-        // ✅ Map lại dữ liệu để trả cho frontend
         var result = orders.Select(o => new
         {
             o.Id,
@@ -141,13 +142,16 @@ public class OrdersController : ControllerBase
                     ProductName = i.Product?.Name,
                     i.Quantity,
                     i.Price,
-                    ImageUrl = i.Product?.ImageUrl // ✅
+                    VariantId = i.VariantId,
+                    VariantName = i.Variant?.Name,
+                    ImageUrl = i.Variant?.ImageUrl
+                               ?? i.Product?.Variants.FirstOrDefault()?.ImageUrl
                 })
-
         });
 
         return Ok(result);
     }
+
 
     // ✅ Lấy toàn bộ đơn hàng (Admin)
     [Authorize(Roles = "Admin")]
@@ -158,6 +162,9 @@ public class OrdersController : ControllerBase
             .Include(o => o.User)
             .Include(o => o.Items)
                 .ThenInclude(i => i.Product)
+                    .ThenInclude(p => p.Variants)
+            .Include(o => o.Items)
+                .ThenInclude(i => i.Variant)
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();
 
@@ -175,18 +182,20 @@ public class OrdersController : ControllerBase
             Items = o.Items.Select(i => new
             {
                 i.ProductId,
-                ProductName = i.Product != null ? i.Product.Name : "N/A",
+                ProductName = i.Product?.Name ?? "N/A",
                 i.Quantity,
                 i.Price,
-                ImageUrl = i.Product != null ? i.Product.ImageUrl : null // ✅ thêm dòng này
+                VariantId = i.VariantId,
+                VariantName = i.Variant?.Name,
+                ImageUrl = i.Variant?.ImageUrl
+                           ?? i.Product?.Variants.FirstOrDefault()?.ImageUrl
             })
-
         });
 
         return Ok(result);
     }
 
-    // ✅ Chi tiết 1 đơn hàng
+
     [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetOrderById(int id)
@@ -194,6 +203,9 @@ public class OrdersController : ControllerBase
         var order = await _context.Orders
             .Include(o => o.Items)
                 .ThenInclude(i => i.Product)
+                    .ThenInclude(p => p.Variants)
+            .Include(o => o.Items)
+                .ThenInclude(i => i.Variant)
             .FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null) return NotFound();
@@ -214,10 +226,14 @@ public class OrdersController : ControllerBase
                 ProductName = i.Product?.Name ?? "N/A",
                 i.Quantity,
                 i.Price,
-                i.Product?.ImageUrl
+                VariantId = i.VariantId,
+                VariantName = i.Variant?.Name,
+                ImageUrl = i.Variant?.ImageUrl
+                           ?? i.Product?.Variants.FirstOrDefault()?.ImageUrl
             })
         });
     }
+
 
 
 
