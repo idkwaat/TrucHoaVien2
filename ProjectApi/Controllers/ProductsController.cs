@@ -305,38 +305,46 @@ namespace ProjectApi.Controllers
                     }
 
                     // 🧱 Upload model (3D) dung lượng lớn
-                    // 🧱 Upload model (3D) dung lượng lớn
+                    // 🧱 Upload model (3D)
                     if (modelFile != null)
                     {
                         try
                         {
-                            Console.WriteLine($"⬆️ Uploading large model: {modelFile.FileName} ({modelFile.Length / 1024 / 1024} MB)");
+                            Console.WriteLine($"⬆️ Uploading model: {modelFile.FileName} ({modelFile.Length / 1024 / 1024} MB)");
 
                             using var stream = modelFile.OpenReadStream();
 
-                            // Dùng RawUploadParams vì là file 3D (không phải ảnh)
                             var uploadParams = new RawUploadParams
                             {
                                 File = new FileDescription(modelFile.FileName, stream),
                                 Folder = "uploads/models",
                                 UseFilename = true,
-                                UniqueFilename = false
-                                // ResourceType is set by using RawUploadParams, no need to assign
+                                UniqueFilename = false,
+                                ResourceType = "raw" // ✅ BẮT BUỘC dòng này để Cloudinary xử lý đúng file .glb
                             };
 
-                            // ✅ Dùng phương thức upload dành cho file lớn
-                            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                            RawUploadResult uploadResult;
 
+                            if (modelFile.Length > 20 * 1024 * 1024)
+                            {
+                                // ✅ Dành cho file lớn hơn 20MB
+                                uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
+                            }
+                            else
+                            {
+                                // ✅ File nhỏ hơn 20MB (ví dụ 1–2MB)
+                                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                            }
 
                             modelUrl = uploadResult.SecureUrl.ToString();
-
                             Console.WriteLine($"✅ Uploaded model: {modelUrl}");
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"❌ Lỗi upload model lớn: {ex.Message}");
+                            Console.WriteLine($"❌ Lỗi upload model: {ex.Message}");
                         }
                     }
+
 
 
                     // 🔹 Lưu biến thể
