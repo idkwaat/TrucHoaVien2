@@ -14,47 +14,43 @@ namespace ProjectApi.Controllers
         [HttpPost("webhook")]
         public IActionResult ReceiveWebhook([FromForm] IFormCollection form)
         {
-            var authHeader = Request.Headers["Authorization"].FirstOrDefault();
+            // ✅ Ghi log tất cả dữ liệu để debug
+            Console.WriteLine("=== 📩 FORM DATA từ SePay ===");
+            foreach (var key in form.Keys)
+                Console.WriteLine($"{key}: {form[key]}");
+            Console.WriteLine("============================");
 
-            if (string.IsNullOrEmpty(authHeader))
+            // 🔑 Lấy API key từ form
+            var apiKey = form["api_key"].FirstOrDefault()?.Trim();
+
+            // Nếu SePay không dùng trường api_key mà gửi thẳng key dưới tên khác,
+            // thử lấy thêm một vài field phổ biến
+            if (string.IsNullOrEmpty(apiKey))
             {
-                Console.WriteLine("❌ Thiếu header Authorization");
-                return Unauthorized("Missing Authorization header");
+                apiKey = form["key"].FirstOrDefault()?.Trim()
+                      ?? form["token"].FirstOrDefault()?.Trim()
+                      ?? form["signature"].FirstOrDefault()?.Trim();
             }
 
-            // ✅ Hỗ trợ cả 2 kiểu Authorization header
-            var valid1 = authHeader == $"Key {SEPAY_API_KEY}";
-            var valid2 = authHeader == $"Bearer {SEPAY_API_KEY}";
-
-            if (!valid1 && !valid2)
+            // ✅ Kiểm tra khớp với key bạn cấu hình trong SePay dashboard
+            if (apiKey != SEPAY_API_KEY && apiKey != $"Key-{SEPAY_API_KEY}")
             {
-                Console.WriteLine($"❌ Sai API key. Nhận được: '{authHeader}'");
+                Console.WriteLine($"❌ Sai API key. Nhận được: '{apiKey}'");
                 return Unauthorized("Invalid API key");
             }
 
+            Console.WriteLine("✅ Xác thực API Key thành công!");
 
-            Console.WriteLine("✅ Xác thực thành công webhook từ SePay.");
-            Console.WriteLine("Dữ liệu nhận được:");
+            // 👉 Xử lý nội dung giao dịch
+            var amount = form["amount"].FirstOrDefault();
+            var content = form["content"].FirstOrDefault();
+            var reference = form["reference"].FirstOrDefault();
 
-            foreach (var key in form.Keys)
-                Console.WriteLine($" - {key}: {form[key]}");
+            Console.WriteLine($"💰 Giao dịch {reference} - {amount}đ - Nội dung: {content}");
 
-            try
-            {
-                var amount = form["amount"].FirstOrDefault();
-                var content = form["content"].FirstOrDefault();
-                var reference = form["reference"].FirstOrDefault();
-
-                Console.WriteLine($"💰 Giao dịch {reference} - {amount}đ - Nội dung: {content}");
-
-                return Ok("OK");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Lỗi xử lý webhook: " + ex.Message);
-                return BadRequest("Error");
-            }
+            return Ok("OK");
         }
+
 
     }
 }
