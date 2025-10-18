@@ -140,8 +140,10 @@ public class OrdersController : ControllerBase
                     i.ProductId,
                     ProductName = i.Product?.Name,
                     i.Quantity,
-                    i.Price
+                    i.Price,
+                    ImageUrl = i.Product?.ImageUrl // ✅
                 })
+
         });
 
         return Ok(result);
@@ -175,8 +177,10 @@ public class OrdersController : ControllerBase
                 i.ProductId,
                 ProductName = i.Product != null ? i.Product.Name : "N/A",
                 i.Quantity,
-                i.Price
+                i.Price,
+                ImageUrl = i.Product != null ? i.Product.ImageUrl : null // ✅ thêm dòng này
             })
+
         });
 
         return Ok(result);
