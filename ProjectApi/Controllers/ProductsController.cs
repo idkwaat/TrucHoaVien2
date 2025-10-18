@@ -325,7 +325,8 @@ namespace ProjectApi.Controllers
                             };
 
                             // ✅ Dùng phương thức upload dành cho file lớn
-                            var uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
+                            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
 
                             modelUrl = uploadResult.SecureUrl.ToString();
 
