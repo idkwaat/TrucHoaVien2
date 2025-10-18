@@ -27,15 +27,21 @@ namespace ProjectApi.Controllers
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_config["SePay:ApiToken"]}");
 
             // Làm sạch tên khách hàng (bỏ dấu, khoảng trắng, viết hoa)
-            var cleanName = string.Join("", req.CustomerName
-                .ToUpper()
-                .Normalize(NormalizationForm.FormD)
-                .Where(c => char.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark));
+            var cleanName = string.Empty;
+            if (!string.IsNullOrWhiteSpace(req.CustomerName))
+            {
+                cleanName = string.Join("", req.CustomerName
+                    .ToUpper()
+                    .Normalize(NormalizationForm.FormD)
+                    .Where(c => char.GetUnicodeCategory(c) != System.Globalization.UnicodeCategory.NonSpacingMark));
 
-            cleanName = cleanName.Replace(" ", "").Replace("_", "");
+                cleanName = cleanName.Replace(" ", "").Replace("_", "");
+            }
 
-            // Gộp vào nội dung chuyển khoản
-            var content = $"{req.Description}_{cleanName}";
+            var content = string.IsNullOrEmpty(cleanName)
+                ? req.Description
+                : $"{req.Description}_{cleanName}";
+
 
             var payload = new
             {
