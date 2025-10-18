@@ -46,7 +46,9 @@ namespace ProjectApi.Controllers
             var content = contentProp.GetString() ?? "";
 
             // ✅ Lấy orderId từ nội dung chuyển khoản: "DH_123"
-            var match = Regex.Match(content, @"DH_(\d+)", RegexOptions.IgnoreCase);
+            // ✅ Cho phép cả DH_11 và DH11
+            var match = Regex.Match(content, @"DH[_\-]?(\d+)", RegexOptions.IgnoreCase);
+
             if (!match.Success)
             {
                 Console.WriteLine("❌ Không tìm thấy mã đơn hàng trong nội dung: " + content);
