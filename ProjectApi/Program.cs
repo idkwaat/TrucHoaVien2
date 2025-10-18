@@ -17,6 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
 
 // ====================
+// 🔹 SePay settings + HttpClient + Service
+// ====================
+builder.Services.Configure<SePaySettings>(builder.Configuration.GetSection("SePay"));
+builder.Services.AddHttpClient<SePayService>();        // for calling SePay endpoints if needed
+builder.Services.AddScoped<SePayService>();            // injectable service to query SePay
+
+// ====================
 // 🔹 Cho phép upload file lớn (500MB)
 // ====================
 builder.WebHost.ConfigureKestrel(options =>
@@ -36,7 +43,6 @@ builder.Services.Configure<CloudinarySettings>(
 
 builder.Services.AddHostedService<ProjectApi.Services.PendingOrderCleanupService>();
 
-
 builder.Services.AddSingleton(sp =>
 {
     var settings = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
@@ -51,7 +57,35 @@ builder.Services.AddControllers(options =>
     options.SuppressAsyncSuffixInActionNames = false;
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    // Swagger security - describe Authorization header usage
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        Description = "Nhập API Key theo dạng: Apikey {your_webhook_key} (ví dụ: Apikey Truchoavien123) hoặc Apikey {your_api_token} khi gọi SePay API.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "ApiKey"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                },
+                Scheme = "ApiKey",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+            },
+            new List<string>()
+        }
+    });
+});
 
 // ====================
 // 🔹 Database setup
@@ -94,37 +128,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ClockSkew = TimeSpan.FromSeconds(30)
     };
 });
-
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
-    {
-        Description = "Nhập API Key theo dạng: Key {your_api_key} hoặc Bearer {your_api_key}",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "ApiKey"
-    });
-
-
-    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement {
-        {
-            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-            {
-                Reference = new Microsoft.OpenApi.Models.OpenApiReference
-                {
-                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
-                    Id = "ApiKey"
-                },
-                Scheme = "ApiKeyScheme",
-                Name = "Authorization",
-                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-            },
-            new List<string>()
-        }
-    });
-});
-
 
 builder.Services.AddAuthorization(options =>
 {
@@ -234,4 +237,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-
