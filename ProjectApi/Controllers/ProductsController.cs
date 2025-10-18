@@ -305,7 +305,6 @@ namespace ProjectApi.Controllers
                     }
 
                     // 🧱 Upload model (3D) dung lượng lớn
-                    // 🧱 Upload model (3D)
                     if (modelFile != null)
                     {
                         try
@@ -319,24 +318,23 @@ namespace ProjectApi.Controllers
                                 File = new FileDescription(modelFile.FileName, stream),
                                 Folder = "uploads/models",
                                 UseFilename = true,
-                                UniqueFilename = false,
-                                ResourceType = "raw" // ✅ BẮT BUỘC dòng này để Cloudinary xử lý đúng file .glb
+                                UniqueFilename = false
                             };
 
                             RawUploadResult uploadResult;
 
                             if (modelFile.Length > 20 * 1024 * 1024)
                             {
-                                // ✅ Dành cho file lớn hơn 20MB
+                                // ✅ File lớn hơn 20MB
                                 uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
                             }
                             else
                             {
-                                // ✅ File nhỏ hơn 20MB (ví dụ 1–2MB)
+                                // ✅ File nhỏ hơn 20MB (1–2MB)
                                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
                             }
 
-                            modelUrl = uploadResult.SecureUrl.ToString();
+                            modelUrl = uploadResult.SecureUrl?.ToString();
                             Console.WriteLine($"✅ Uploaded model: {modelUrl}");
                         }
                         catch (Exception ex)
@@ -344,6 +342,7 @@ namespace ProjectApi.Controllers
                             Console.WriteLine($"❌ Lỗi upload model: {ex.Message}");
                         }
                     }
+
 
 
 
