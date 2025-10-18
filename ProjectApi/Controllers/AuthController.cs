@@ -67,7 +67,7 @@ namespace ProjectApi.Controllers
                 u.Email == dto.Username ||
                 u.Phone == dto.Username);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
                 return Unauthorized("Sai tài khoản hoặc mật khẩu");
 
             var token = _tokenService.CreateAccessToken(user);
