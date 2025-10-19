@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjectApi.Data;
@@ -11,9 +12,11 @@ using ProjectApi.Data;
 namespace ProjectApi.Migrations
 {
     [DbContext(typeof(FurnitureDbContext))]
-    partial class FurnitureDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251019062154_AddVisitorLogs")]
+    partial class AddVisitorLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
