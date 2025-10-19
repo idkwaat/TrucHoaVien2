@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\dtos\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\dtos\\userprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -181,7 +181,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "LoginDto.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\LoginDto.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Dtos\\LoginDto.cs",
@@ -206,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ProductsController.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\ProductsController.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProductsController.cs",
@@ -214,8 +214,7 @@
               "RelativeToolTip": "ProjectApi\\Controllers\\ProductsController.cs",
               "ViewState": "AgIAADkBAAAAAAAAAAAmwFIBAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T13:47:37.349Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T13:47:37.349Z"
             },
             {
               "$type": "Document",
@@ -227,8 +226,7 @@
               "RelativeToolTip": "ProjectApi\\Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T03:03:58.463Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T03:03:58.463Z"
             },
             {
               "$type": "Document",
@@ -240,8 +238,7 @@
               "RelativeToolTip": "ProjectApi\\Models\\SePaySettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T08:17:52.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T08:17:52.67Z"
             },
             {
               "$type": "Document",
@@ -253,8 +250,7 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\VariantDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T14:07:49.552Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T14:07:49.552Z"
             },
             {
               "$type": "Document",
@@ -266,8 +262,7 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\UpdateUserDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T06:14:31.832Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-12T06:14:31.832Z"
             },
             {
               "$type": "Document",
@@ -279,8 +274,7 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\UserProfileDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T06:14:16.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-12T06:14:16.777Z"
             },
             {
               "$type": "Document",
@@ -292,8 +286,7 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\ProductDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T14:07:42.988Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T14:07:42.988Z"
             },
             {
               "$type": "Document",
@@ -303,7 +296,7 @@
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\AuthController.cs",
               "RelativeToolTip": "ProjectApi\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAcwEwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAcwEUAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-11T06:45:26.007Z",
               "EditorCaption": ""
