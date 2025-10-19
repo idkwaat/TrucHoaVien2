@@ -100,42 +100,63 @@ namespace ProjectApi.Controllers
         }
 
 
-        // 📊 3️⃣ Biểu đồ doanh thu 7 ngày
         [HttpGet("revenue-chart")]
         public async Task<IActionResult> GetRevenueChart()
         {
             var now = DateTime.UtcNow.Date;
-            var data = await _context.Orders
+
+            // Group theo ngày (chưa ToString)
+            var rawData = await _context.Orders
                 .Where(o => o.OrderDate >= now.AddDays(-6))
                 .GroupBy(o => o.OrderDate.Date)
                 .Select(g => new
                 {
-                    Date = g.Key.ToString("yyyy-MM-dd"),
+                    Date = g.Key,
                     Revenue = g.Sum(x => x.Total)
                 })
-                .OrderBy(x => x.Date)
                 .ToListAsync();
 
-            return Ok(data);
+            // Format lại sau khi EF đã lấy ra (chạy trong bộ nhớ)
+            var result = rawData
+                .Select(g => new
+                {
+                    Date = g.Date.ToString("yyyy-MM-dd"),
+                    g.Revenue
+                })
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            return Ok(result);
         }
+
 
         // 📈 4️⃣ Biểu đồ lượt truy cập 7 ngày
         [HttpGet("visit-chart")]
         public async Task<IActionResult> GetVisitChart()
         {
             var now = DateTime.UtcNow.Date;
-            var data = await _context.VisitorLogs
+
+            var rawData = await _context.VisitorLogs
                 .Where(v => v.VisitTime >= now.AddDays(-6))
                 .GroupBy(v => v.VisitTime.Date)
                 .Select(g => new
                 {
-                    Date = g.Key.ToString("yyyy-MM-dd"),
+                    Date = g.Key,
                     Count = g.Count()
                 })
-                .OrderBy(x => x.Date)
                 .ToListAsync();
 
-            return Ok(data);
+            var result = rawData
+                .Select(g => new
+                {
+                    Date = g.Date.ToString("yyyy-MM-dd"),
+                    g.Count
+                })
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            return Ok(result);
         }
+
     }
 }
