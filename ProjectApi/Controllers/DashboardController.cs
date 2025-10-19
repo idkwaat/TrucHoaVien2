@@ -65,6 +65,7 @@ namespace ProjectApi.Controllers
         public async Task<IActionResult> GetOverview()
         {
             var today = DateTime.UtcNow.Date;
+            var sevenDaysAgo = today.AddDays(-6);
 
             var totalOrders = await _context.Orders.CountAsync();
             var todayOrders = await _context.Orders.CountAsync(o => o.OrderDate.Date == today);
@@ -81,6 +82,10 @@ namespace ProjectApi.Controllers
             var totalVisits = await _context.VisitorLogs.CountAsync();
             var todayVisits = await _context.VisitorLogs.CountAsync(v => v.VisitTime.Date == today);
 
+            // 🆕 Tổng lượt truy cập 7 ngày gần nhất
+            var last7DaysVisits = await _context.VisitorLogs
+                .CountAsync(v => v.VisitTime.Date >= sevenDaysAgo && v.VisitTime.Date <= today);
+
             return Ok(new
             {
                 totalOrders,
@@ -89,9 +94,11 @@ namespace ProjectApi.Controllers
                 todayRevenue,
                 totalUsers,
                 totalVisits,
-                todayVisits
+                todayVisits,
+                last7DaysVisits // 🆕 thêm vào đây
             });
         }
+
 
         // 📊 3️⃣ Biểu đồ doanh thu 7 ngày
         [HttpGet("revenue-chart")]

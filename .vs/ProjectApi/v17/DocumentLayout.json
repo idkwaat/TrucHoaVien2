@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\data\\furnituredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\data\\furnituredbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|solutionrelative:projectapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1A21A47-F0FC-422D-8129-2CD6975364F8}|ProjectApi\\ProjectApi.csproj|c:\\users\\kienv\\source\\repos\\projectapi\\projectapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -189,7 +189,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "VisitorLog.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\VisitorLog.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\VisitorLog.cs",
@@ -207,7 +207,7 @@
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\DashboardController.cs",
               "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Controllers\\DashboardController.cs",
               "RelativeToolTip": "ProjectApi\\Controllers\\DashboardController.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAmwEEAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAmwGQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-19T04:49:30.93Z",
               "EditorCaption": ""
@@ -274,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "FurnitureDbContext.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Data\\FurnitureDbContext.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Data\\FurnitureDbContext.cs",
@@ -298,6 +298,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
+              "RelativeDocumentMoniker": "ProjectApi\\Program.cs",
+              "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
+              "RelativeToolTip": "ProjectApi\\Program.cs",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAmwO8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T05:06:55.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
               "Title": "ProductDTO.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Dtos\\ProductDTO.cs",
@@ -310,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Models\\Order.cs",
               "RelativeDocumentMoniker": "ProjectApi\\Models\\Order.cs",
@@ -343,18 +356,6 @@
               "ViewState": "AgIAACwAAAAAAAAAAAAcwEUAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-11T06:45:26.007Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
-              "RelativeDocumentMoniker": "ProjectApi\\Program.cs",
-              "ToolTip": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\Program.cs",
-              "RelativeToolTip": "ProjectApi\\Program.cs",
-              "ViewState": "AgIAAMoAAAAAAAAAAAAmwO8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T05:06:55.593Z"
             },
             {
               "$type": "Document",
