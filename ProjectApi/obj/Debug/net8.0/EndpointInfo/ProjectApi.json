@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Project API",
-    "version": "v1"
+    "title": "ProjectApi",
+    "version": "1.0"
   },
   "paths": {
     "/api/Auth/register": {
@@ -369,6 +369,54 @@
         }
       }
     },
+    "/api/Dashboard/visit": {
+      "post": {
+        "tags": [
+          "Dashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/overview": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/revenue-chart": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Dashboard/visit-chart": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Orders": {
       "post": {
         "tags": [
@@ -596,12 +644,12 @@
                   "Name": {
                     "type": "string"
                   },
+                  "Description": {
+                    "type": "string"
+                  },
                   "Price": {
                     "type": "number",
                     "format": "double"
-                  },
-                  "Description": {
-                    "type": "string"
                   },
                   "CategoryId": {
                     "type": "integer",
@@ -651,6 +699,19 @@
                       "format": "binary"
                     }
                   },
+                  "VariantCleanImages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "VariantCleanImageUrls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "VariantImageUrls": {
                     "type": "array",
                     "items": {
@@ -669,10 +730,10 @@
                 "Name": {
                   "style": "form"
                 },
-                "Price": {
+                "Description": {
                   "style": "form"
                 },
-                "Description": {
+                "Price": {
                   "style": "form"
                 },
                 "CategoryId": {
@@ -700,6 +761,12 @@
                   "style": "form"
                 },
                 "VariantModels": {
+                  "style": "form"
+                },
+                "VariantCleanImages": {
+                  "style": "form"
+                },
+                "VariantCleanImageUrls": {
                   "style": "form"
                 },
                 "VariantImageUrls": {
@@ -800,6 +867,19 @@
                       "format": "binary"
                     }
                   },
+                  "VariantCleanImages": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "VariantCleanImageUrls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "VariantImageUrls": {
                     "type": "array",
                     "items": {
@@ -836,12 +916,123 @@
                 "VariantModels": {
                   "style": "form"
                 },
+                "VariantCleanImages": {
+                  "style": "form"
+                },
+                "VariantCleanImageUrls": {
+                  "style": "form"
+                },
                 "VariantImageUrls": {
                   "style": "form"
                 },
                 "VariantModelUrls": {
                   "style": "form"
                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Products/{id}/engraving": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngravingUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngravingUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngravingUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Products/{id}/engraving-text": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngravingTextDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngravingTextDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngravingTextDto"
               }
             }
           }
@@ -1023,6 +1214,31 @@
         }
       }
     },
+    "/api/SePay/webhook": {
+      "post": {
+        "tags": [
+          "SePay"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { }
+            },
+            "text/json": {
+              "schema": { }
+            },
+            "application/*+json": {
+              "schema": { }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Upload/file": {
       "post": {
         "tags": [
@@ -1128,6 +1344,14 @@
             "type": "number",
             "format": "double",
             "readOnly": true
+          },
+          "engravingPrice": {
+            "type": "number",
+            "format": "double"
+          },
+          "engravingText": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1167,6 +1391,43 @@
         },
         "additionalProperties": false
       },
+      "EngravingTextDto": {
+        "type": "object",
+        "properties": {
+          "engravingText": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EngravingUpdateDto": {
+        "type": "object",
+        "properties": {
+          "engravingX": {
+            "type": "number",
+            "format": "double"
+          },
+          "engravingY": {
+            "type": "number",
+            "format": "double"
+          },
+          "engravingColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "engravingFont": {
+            "type": "string",
+            "nullable": true
+          },
+          "extraPrice": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LoginDto": {
         "type": "object",
         "properties": {
@@ -1188,6 +1449,15 @@
             "type": "integer",
             "format": "int32"
           },
+          "variantId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "variantName": {
+            "type": "string",
+            "nullable": true
+          },
           "quantity": {
             "type": "integer",
             "format": "int32"
@@ -1195,6 +1465,15 @@
           "price": {
             "type": "number",
             "format": "double"
+          },
+          "engravingText": {
+            "type": "string",
+            "nullable": true
+          },
+          "engravingFee": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1298,12 +1577,47 @@
             "type": "string",
             "nullable": true
           },
+          "cleanImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
           "productId": {
             "type": "integer",
             "format": "int32"
           },
           "product": {
             "$ref": "#/components/schemas/Product"
+          },
+          "engravingX": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "engravingY": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "engravingColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "engravingFont": {
+            "type": "string",
+            "nullable": true
+          },
+          "engravingText": {
+            "type": "string",
+            "nullable": true
+          },
+          "engravingSize": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "extraPrice": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -1519,17 +1833,17 @@
       }
     },
     "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "description": "Nhập JWT token theo định dạng: Bearer {token}",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      "ApiKey": {
+        "type": "apiKey",
+        "description": "Nhập API Key theo dạng: Apikey {your_webhook_key} (ví dụ: Apikey Truchoavien123) hoặc Apikey {your_api_token} khi gọi SePay API.",
+        "name": "Authorization",
+        "in": "header"
       }
     }
   },
   "security": [
     {
-      "Bearer": [ ]
+      "ApiKey": [ ]
     }
   ]
 }

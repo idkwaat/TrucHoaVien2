@@ -17,7 +17,10 @@ public class CartController : ControllerBase
     [HttpPost("add")]
     public IActionResult AddToCart([FromBody] CartItem item)
     {
-        var existing = Cart.FirstOrDefault(x => x.ProductId == item.ProductId);
+        var existing = Cart.FirstOrDefault(x =>
+            x.ProductId == item.ProductId &&
+            (x.EngravingText ?? "") == (item.EngravingText ?? ""));
+
         if (existing != null)
         {
             existing.Quantity += item.Quantity;
@@ -25,8 +28,13 @@ public class CartController : ControllerBase
         else
         {
             item.Id = Cart.Count > 0 ? Cart.Max(x => x.Id) + 1 : 1;
+
+            // Nếu muốn lưu tổng giá = giá gốc + giá khắc riêng
+            item.Price = item.Price + item.EngravingPrice;
+
             Cart.Add(item);
         }
+
         return Ok(Cart);
     }
 

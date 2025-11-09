@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\ProjectApi.csproj": {}
+    "C:\\Users\\pck06\\Source\\Repos\\TrucHoaVien2\\ProjectApi\\ProjectApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\ProjectApi.csproj": {
+    "C:\\Users\\pck06\\Source\\Repos\\TrucHoaVien2\\ProjectApi\\ProjectApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\ProjectApi.csproj",
+        "projectUniqueName": "C:\\Users\\pck06\\Source\\Repos\\TrucHoaVien2\\ProjectApi\\ProjectApi.csproj",
         "projectName": "ProjectApi",
-        "projectPath": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\ProjectApi.csproj",
-        "packagesPath": "C:\\Users\\kienv\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kienv\\source\\repos\\ProjectApi\\ProjectApi\\obj\\",
+        "projectPath": "C:\\Users\\pck06\\Source\\Repos\\TrucHoaVien2\\ProjectApi\\ProjectApi.csproj",
+        "packagesPath": "C:\\Users\\pck06\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pck06\\Source\\Repos\\TrucHoaVien2\\ProjectApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "G:\\Virsual\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kienv\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pck06\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -132,7 +133,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

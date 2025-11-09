@@ -55,15 +55,29 @@ public class OrdersController : ControllerBase
         await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();
 
-        // ✅ Thêm chi tiết sản phẩm
-        var items = req.Items.Select(item => new OrderItem
+        // ✅ Thêm chi tiết sản phẩm (có khắc chữ)
+        var items = req.Items.Select(item =>
         {
-            OrderId = order.Id,
-            ProductId = item.ProductId,
-            VariantId = item.VariantId,
-            Quantity = item.Quantity,
-            Price = item.Price
+            decimal engravingFee = 0;
+
+            // Nếu có chữ khắc -> cộng thêm phí
+            if (!string.IsNullOrWhiteSpace(item.EngravingText))
+            {
+                engravingFee = item.EngravingFee ?? 200000; // Mặc định 200k nếu frontend không gửi
+            }
+
+            return new OrderItem
+            {
+                OrderId = order.Id,
+                ProductId = item.ProductId,
+                VariantId = item.VariantId,
+                Quantity = item.Quantity,
+                Price = item.Price + engravingFee, // ✅ cộng thêm tiền khắc
+                EngravingText = item.EngravingText,
+                EngravingFee = engravingFee
+            };
         });
+
 
         await _context.OrderItems.AddRangeAsync(items);
         await _context.SaveChangesAsync();
@@ -192,11 +206,18 @@ public class OrdersController : ControllerBase
                 ProductName = i.Product?.Name ?? "N/A",
                 i.Quantity,
                 i.Price,
-                VariantId = i.VariantId,
-                VariantName = i.Variant?.Name,
+                i.VariantId,
+                i.Variant?.Name,
+                EngravingText = i.EngravingText,
+                EngravingFee = i.EngravingFee,
+                EngravingFont = i.Variant?.EngravingFont,
+                EngravingColor = i.Variant?.EngravingColor,
+                EngravingSize = i.Variant?.EngravingSize,
+                ExtraPrice = i.Variant?.ExtraPrice,
                 ImageUrl = i.Variant?.ImageUrl
-                           ?? i.Product?.Variants.FirstOrDefault()?.ImageUrl
+               ?? i.Product?.Variants.FirstOrDefault()?.ImageUrl
             })
+
         });
 
         return Ok(result);
@@ -210,14 +231,14 @@ public class OrdersController : ControllerBase
         var order = await _context.Orders
             .Include(o => o.Items)
                 .ThenInclude(i => i.Product)
-                    .ThenInclude(p => p.Variants)
             .Include(o => o.Items)
                 .ThenInclude(i => i.Variant)
             .FirstOrDefaultAsync(o => o.Id == id);
 
-        if (order == null) return NotFound();
+        if (order == null)
+            return NotFound();
 
-        return Ok(new
+        var result = new
         {
             order.Id,
             order.CustomerName,
@@ -233,14 +254,22 @@ public class OrdersController : ControllerBase
                 ProductName = i.Product?.Name ?? "N/A",
                 i.Quantity,
                 i.Price,
-                VariantId = i.VariantId,
+                i.VariantId,
                 VariantName = i.Variant?.Name,
+                // ✅ Thêm thông tin khắc
+                EngravingText = i.EngravingText,              // Từ bảng OrderItem
+                EngravingFee = i.EngravingFee,                // Phí khắc riêng nếu có
+                EngravingFont = i.Variant?.EngravingFont,     // Từ bảng Variant (nếu bạn có)
+                EngravingColor = i.Variant?.EngravingColor,
+                EngravingSize = i.Variant?.EngravingSize,
+                ExtraPrice = i.Variant?.ExtraPrice,
                 ImageUrl = i.Variant?.ImageUrl
                            ?? i.Product?.Variants.FirstOrDefault()?.ImageUrl
             })
-        });
-    }
+        };
 
+        return Ok(result);
+    }
 
 
 

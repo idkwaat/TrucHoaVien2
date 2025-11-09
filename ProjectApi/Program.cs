@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using ProjectApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine("SERVER STARTED !!!, có log nhé");
+
 builder.Services.AddSignalR();
 
 // ====================

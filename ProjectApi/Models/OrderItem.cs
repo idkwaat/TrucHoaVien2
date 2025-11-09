@@ -10,6 +10,10 @@ public class OrderItem
     public int Quantity { get; set; }
     public decimal Price { get; set; }
 
+    public string? EngravingText { get; set; } // ✅ chữ khắc tuỳ chọn
+    public decimal? EngravingFee { get; set; } // ✅ tiền khắc (nếu có)
+
+
     public Order? Order { get; set; }
     public Product? Product { get; set; }
     public ProductVariant? Variant { get; set; }      // ✅ thêm

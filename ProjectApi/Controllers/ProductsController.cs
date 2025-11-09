@@ -107,9 +107,11 @@ namespace ProjectApi.Controllers
         v.Name,
         v.Price,
         v.ImageUrl,
+        v.CleanImageUrl, // ✅ thêm dòng này
         v.ModelUrl
     }).Cast<object>().ToList()
     : new List<object>(),
+
                 // Không có biến thể vẫn trả rỗng
                 MinPrice = p.Variants.Any() ? p.Variants.Min(v => v.Price) : 0,
                 MaxPrice = p.Variants.Any() ? p.Variants.Max(v => v.Price) : 0
@@ -160,8 +162,10 @@ namespace ProjectApi.Controllers
                     v.Name,
                     v.Price,
                     v.ImageUrl,
+                    v.CleanImageUrl, // ✅ thêm dòng này
                     v.ModelUrl
                 })
+
             });
         }
 
@@ -227,9 +231,8 @@ namespace ProjectApi.Controllers
 
 
 
-        // 🟢 Tạo sản phẩm cha + các biến thể
         [HttpPost("create")]
-        [RequestSizeLimit(200_000_000)] // ✅ Cho phép file lớn tới 200MB
+        [RequestSizeLimit(200_000_000)]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateDto dto)
         {
@@ -273,18 +276,22 @@ namespace ProjectApi.Controllers
                     string name = dto.VariantNames[i];
                     decimal price = dto.VariantPrices?.ElementAtOrDefault(i) ?? 0;
 
-                    // 🧩 FIX: lấy đúng file kể cả phần tử đầu tiên không có [0]
+                    // ✅ Lấy đúng file từ form
                     var imageFile = Request.Form.Files.FirstOrDefault(f =>
                         f.Name == $"VariantImages[{i}]" || (i == 0 && f.Name == "VariantImages")
+                    );
+
+                    var cleanImageFile = Request.Form.Files.FirstOrDefault(f =>
+                        f.Name == $"VariantCleanImages[{i}]" || (i == 0 && f.Name == "VariantCleanImages")
                     );
 
                     var modelFile = Request.Form.Files.FirstOrDefault(f =>
                         f.Name == $"VariantModels[{i}]" || (i == 0 && f.Name == "VariantModels")
                     );
 
-                    string? imageUrl = null, modelUrl = null;
+                    string? imageUrl = null, cleanImageUrl = null, modelUrl = null;
 
-                    // 🖼️ Upload ảnh
+                    // 🖼️ Upload ảnh chính
                     if (imageFile != null)
                     {
                         try
@@ -304,7 +311,27 @@ namespace ProjectApi.Controllers
                         }
                     }
 
-                    // 🧱 Upload model (3D) dung lượng lớn
+                    // 🖼️ Upload ảnh trơn (Clean)
+                    if (cleanImageFile != null)
+                    {
+                        try
+                        {
+                            using var stream = cleanImageFile.OpenReadStream();
+                            var uploadParams = new ImageUploadParams
+                            {
+                                File = new FileDescription(cleanImageFile.FileName, stream),
+                                Folder = "uploads/clean-images"
+                            };
+                            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                            cleanImageUrl = uploadResult.SecureUrl.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"❌ Lỗi upload ảnh trơn: {ex.Message}");
+                        }
+                    }
+
+                    // 🧱 Upload model (3D)
                     if (modelFile != null)
                     {
                         try
@@ -324,15 +351,9 @@ namespace ProjectApi.Controllers
                             RawUploadResult uploadResult;
 
                             if (modelFile.Length > 20 * 1024 * 1024)
-                            {
-                                // ✅ File lớn hơn 20MB
                                 uploadResult = await _cloudinary.UploadLargeAsync(uploadParams);
-                            }
                             else
-                            {
-                                // ✅ File nhỏ hơn 20MB (1–2MB)
                                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
-                            }
 
                             modelUrl = uploadResult.SecureUrl?.ToString();
                             Console.WriteLine($"✅ Uploaded model: {modelUrl}");
@@ -343,9 +364,6 @@ namespace ProjectApi.Controllers
                         }
                     }
 
-
-
-
                     // 🔹 Lưu biến thể
                     _context.ProductVariants.Add(new ProductVariant
                     {
@@ -353,6 +371,7 @@ namespace ProjectApi.Controllers
                         Name = $"{product.Name} - {name}",
                         Price = price,
                         ImageUrl = imageUrl,
+                        CleanImageUrl = cleanImageUrl, // ✅ ảnh trơn
                         ModelUrl = modelUrl
                     });
                 }
@@ -368,6 +387,11 @@ namespace ProjectApi.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateProduct(int id, [FromForm] ProductUpdateDto dto)
         {
+            Console.WriteLine(">>> UPDATE PRODUCT HIT <<<");
+
+            Console.WriteLine(">>> Files trong request = " + Request.Form.Files.Count);
+            Console.WriteLine(">>> Keys trong request = " + string.Join(", ", Request.Form.Keys));
+
             try
             {
                 var product = await _context.Products
@@ -383,7 +407,7 @@ namespace ProjectApi.Controllers
 
                 Console.WriteLine($"🟡 [UpdateProduct] Tổng file: {Request.Form.Files.Count}");
 
-                // 🖼️ Ảnh đại diện sản phẩm cha (nếu có)
+                // 🖼️ Ảnh đại diện sản phẩm cha
                 if (dto.DefaultImage != null)
                 {
                     try
@@ -428,11 +452,29 @@ namespace ProjectApi.Controllers
                         var name = dto.VariantNames[i];
                         var price = dto.VariantPrices?.ElementAtOrDefault(i) ?? 0;
 
-                        // ✅ Lấy file đúng chỉ số
-                        var imageFile = Request.Form.Files.GetFile($"VariantImages[{i}]");
-                        var modelFile = Request.Form.Files.GetFile($"VariantModels[{i}]");
+                        // ✅ Lấy file trực tiếp từ form để tránh lỗi index lệch
+                        var imageFile = Request.Form.Files.FirstOrDefault(f =>
+                            f.Name == $"VariantImages[{i}]" || (i == 0 && f.Name == "VariantImages")
+                        );
+
+                        var cleanImageFile = Request.Form.Files.FirstOrDefault(f =>
+                            f.Name == $"VariantCleanImages[{i}]" || (i == 0 && f.Name == "VariantCleanImages")
+                        );
+
+                        var modelFile = Request.Form.Files.FirstOrDefault(f =>
+                            f.Name == $"VariantModels[{i}]" || (i == 0 && f.Name == "VariantModels")
+                        );
+
+
+                        Console.WriteLine($"🧾 VariantCleanImages count: {dto.VariantCleanImages?.Count}");
+                        foreach (var f in dto.VariantCleanImages ?? new List<IFormFile>())
+                        {
+                            Console.WriteLine($"📁 Clean image file: {f.FileName} ({f.Length} bytes)");
+                        }
+
 
                         string? imageUrl = dto.VariantImageUrls?.ElementAtOrDefault(i);
+                        string? cleanImageUrl = dto.VariantCleanImageUrls?.ElementAtOrDefault(i);
                         string? modelUrl = dto.VariantModelUrls?.ElementAtOrDefault(i);
 
                         ProductVariant variant;
@@ -450,7 +492,7 @@ namespace ProjectApi.Controllers
                         variant.Name = $"{product.Name} - {name}";
                         variant.Price = price;
 
-                        // 🖼️ Upload ảnh
+                        // 🖼️ Upload ảnh chính
                         if (imageFile != null && imageFile.Length > 0)
                         {
                             try
@@ -472,6 +514,30 @@ namespace ProjectApi.Controllers
                         else if (!string.IsNullOrEmpty(imageUrl))
                         {
                             variant.ImageUrl = imageUrl;
+                        }
+
+                        // 🖼️ Upload ảnh trơn
+                        if (cleanImageFile != null && cleanImageFile.Length > 0)
+                        {
+                            try
+                            {
+                                using var stream = cleanImageFile.OpenReadStream();
+                                var uploadParams = new ImageUploadParams
+                                {
+                                    File = new FileDescription(cleanImageFile.FileName, stream),
+                                    Folder = "uploads/clean-images"
+                                };
+                                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                                variant.CleanImageUrl = uploadResult.SecureUrl.ToString();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"❌ Lỗi upload ảnh trơn biến thể {i}: {ex.Message}");
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(cleanImageUrl))
+                        {
+                            variant.CleanImageUrl = cleanImageUrl;
                         }
 
                         // 🧱 Upload model 3D
@@ -500,7 +566,7 @@ namespace ProjectApi.Controllers
                     }
                 }
 
-                // 🔁 Đồng bộ lại tên biến thể theo tên cha
+                // 🔁 Đồng bộ lại tên biến thể
                 foreach (var v in product.Variants)
                 {
                     if (!string.IsNullOrEmpty(v.Name))
@@ -525,7 +591,6 @@ namespace ProjectApi.Controllers
 
 
 
-
         // 🔴 Xóa sản phẩm cha (xóa luôn biến thể)
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
@@ -543,5 +608,96 @@ namespace ProjectApi.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { message = "🗑️ Đã xóa sản phẩm và toàn bộ biến thể." });
         }
+
+        [HttpGet("{id}/engraving")]
+        public async Task<IActionResult> GetEngraving(int id)
+        {
+            var variant = await _context.ProductVariants
+                .Select(v => new {
+                    v.Id,
+                    v.EngravingX,
+                    v.EngravingY,
+                    v.EngravingColor,
+                    v.EngravingFont,
+                    v.CleanImageUrl,
+                    v.ExtraPrice // ✅ thêm dòng này để FE lấy được phí khắc riêng
+                })
+                .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (variant == null)
+                return NotFound();
+
+            return Ok(variant);
+        }
+
+        [HttpPut("{id}/engraving")]
+        public async Task<IActionResult> UpdateEngraving(int id, [FromBody] EngravingUpdateDto dto)
+        {
+            if (dto == null)
+                return BadRequest(new { message = "Request body is missing" });
+
+            var variant = await _context.ProductVariants.FindAsync(id);
+            if (variant == null)
+                return NotFound(new { message = "Variant not found" });
+
+            // ✅ Cập nhật thông tin khắc
+            variant.EngravingX = dto.EngravingX;
+            variant.EngravingY = dto.EngravingY;
+            variant.EngravingColor = dto.EngravingColor ?? variant.EngravingColor;
+            variant.EngravingFont = dto.EngravingFont ?? variant.EngravingFont;
+
+            // ✅ Thêm dòng này để lưu giá khắc riêng
+            if (dto.ExtraPrice.HasValue)
+                variant.ExtraPrice = dto.ExtraPrice.Value;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Engraving info saved successfully",
+                variant = new
+                {
+                    variant.Id,
+                    variant.EngravingX,
+                    variant.EngravingY,
+                    variant.EngravingColor,
+                    variant.EngravingFont,
+                    variant.ExtraPrice // ✅ trả luôn giá khắc mới về
+                }
+            });
+        }
+
+        // ✅ Cập nhật DTO để nhận thêm giá khắc
+        public class EngravingUpdateDto
+        {
+            public decimal EngravingX { get; set; }
+            public decimal EngravingY { get; set; }
+            public string? EngravingColor { get; set; }
+            public string? EngravingFont { get; set; }
+
+            // ✅ Thêm giá khắc riêng
+            public decimal? ExtraPrice { get; set; }
+        }
+
+
+        [HttpPut("{id}/engraving-text")]
+        public async Task<IActionResult> UpdateEngravingText(int id, [FromBody] EngravingTextDto dto)
+        {
+            var variant = await _context.ProductVariants.FindAsync(id);
+            if (variant == null) return NotFound();
+
+            variant.EngravingText = dto.EngravingText;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Saved engraving text successfully", variant.Id, variant.EngravingText });
+        }
+
+        public class EngravingTextDto
+        {
+            public string? EngravingText { get; set; }
+        }
+
+
+
     }
 }

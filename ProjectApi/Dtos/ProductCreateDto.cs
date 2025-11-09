@@ -16,6 +16,10 @@ namespace ProjectApi.DTOs
         public List<IFormFile>? VariantImages { get; set; }
         public List<IFormFile>? VariantModels { get; set; }
 
+        public List<IFormFile>? VariantCleanImages { get; set; }
+        public List<string>? VariantCleanImageUrls { get; set; } // nếu không upload lại
+
+
         // 🔁 Dùng cho khi edit mà không upload lại file (nếu cần)
         public List<string>? VariantImageUrls { get; set; }
         public List<string>? VariantModelUrls { get; set; }

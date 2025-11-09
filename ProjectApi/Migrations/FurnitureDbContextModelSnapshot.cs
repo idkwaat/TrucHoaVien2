@@ -30,6 +30,12 @@ namespace ProjectApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal?>("EngravingFee")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("EngravingText")
+                        .HasColumnType("text");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
@@ -92,6 +98,30 @@ namespace ProjectApi.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CleanImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EngravingColor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EngravingFont")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("EngravingSize")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EngravingText")
+                        .HasColumnType("text");
+
+                    b.Property<decimal?>("EngravingX")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("EngravingY")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("ExtraPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");

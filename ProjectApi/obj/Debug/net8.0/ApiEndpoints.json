@@ -214,6 +214,46 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProjectApi.Controllers.DashboardController",
+    "Method": "GetOverview",
+    "RelativePath": "api/Dashboard/overview",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.DashboardController",
+    "Method": "GetRevenueChart",
+    "RelativePath": "api/Dashboard/revenue-chart",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.DashboardController",
+    "Method": "LogVisit",
+    "RelativePath": "api/Dashboard/visit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.DashboardController",
+    "Method": "GetVisitChart",
+    "RelativePath": "api/Dashboard/visit-chart",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "OrdersController",
     "Method": "CreateOrder",
     "RelativePath": "api/Orders",
@@ -362,13 +402,13 @@
         "IsRequired": false
       },
       {
-        "Name": "Price",
-        "Type": "System.Decimal",
+        "Name": "Description",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "Description",
-        "Type": "System.String",
+        "Name": "Price",
+        "Type": "System.Nullable\u00601[[System.Decimal, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -417,6 +457,16 @@
         "IsRequired": false
       },
       {
+        "Name": "VariantCleanImages",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "VariantCleanImageUrls",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
         "Name": "VariantImageUrls",
         "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
@@ -440,6 +490,64 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.ProductsController",
+    "Method": "GetEngraving",
+    "RelativePath": "api/Products/{id}/engraving",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.ProductsController",
+    "Method": "UpdateEngraving",
+    "RelativePath": "api/Products/{id}/engraving",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "ProjectApi.Controllers.ProductsController\u002BEngravingUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.ProductsController",
+    "Method": "UpdateEngravingText",
+    "RelativePath": "api/Products/{id}/engraving-text",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "ProjectApi.Controllers.ProductsController\u002BEngravingTextDto",
         "IsRequired": true
       }
     ],
@@ -486,6 +594,16 @@
       {
         "Name": "VariantModels",
         "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "VariantCleanImages",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "VariantCleanImageUrls",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
       },
       {
@@ -606,6 +724,22 @@
       {
         "Name": "productId",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProjectApi.Controllers.SePayController",
+    "Method": "ReceiveWebhook",
+    "RelativePath": "api/SePay/webhook",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Text.Json.JsonElement",
         "IsRequired": true
       }
     ],
