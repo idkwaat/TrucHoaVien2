@@ -619,8 +619,9 @@ namespace ProjectApi.Controllers
                     v.EngravingY,
                     v.EngravingColor,
                     v.EngravingFont,
+                    v.EngravingSize,   // 🆕 Thêm dòng này
                     v.CleanImageUrl,
-                    v.ExtraPrice // ✅ thêm dòng này để FE lấy được phí khắc riêng
+                    v.ExtraPrice
                 })
                 .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -629,6 +630,7 @@ namespace ProjectApi.Controllers
 
             return Ok(variant);
         }
+
 
         [HttpPut("{id}/engraving")]
         public async Task<IActionResult> UpdateEngraving(int id, [FromBody] EngravingUpdateDto dto)
