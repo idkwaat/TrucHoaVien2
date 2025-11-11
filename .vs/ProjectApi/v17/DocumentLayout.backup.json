@@ -209,9 +209,10 @@
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProductsController.cs",
               "ToolTip": "C:\\Users\\pck06\\source\\repos\\TrucHoaVien2\\ProjectApi\\Controllers\\ProductsController.cs",
               "RelativeToolTip": "ProjectApi\\Controllers\\ProductsController.cs",
-              "ViewState": "AgIAAJ8CAAAAAAAAAAAowK4CAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIoCAAAAAAAAAAAowK4CAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T13:47:37.349Z"
+              "WhenOpened": "2025-10-08T13:47:37.349Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -317,7 +318,7 @@
               "RelativeDocumentMoniker": "ProjectApi\\Program.cs",
               "ToolTip": "C:\\Users\\pck06\\source\\repos\\TrucHoaVien2\\ProjectApi\\Program.cs",
               "RelativeToolTip": "ProjectApi\\Program.cs",
-              "ViewState": "AgIAAMgAAAAAAAAAAAAowOIAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAAAKUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T05:06:55.593Z",
               "EditorCaption": ""
