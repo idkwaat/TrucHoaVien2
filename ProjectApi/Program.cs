@@ -146,17 +146,24 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-            "https://truchoavien.vercel.app", // domain Vercel
-            "https://truchoavien.com",        // domain chính thức
-            "https://www.truchoavien.com",    // 🆕 bản có www
-            "http://localhost:5173",          // local dev (Vite)
-            "http://localhost:3000"           // local dev (React)
+            "https://truchoavien.vercel.app",
+            "https://truchoavien.com",
+            "https://www.truchoavien.com",
+            "http://localhost:5173",
+            "http://localhost:3000"
         )
+        .SetIsOriginAllowed(origin =>
+            origin == "https://truchoavien.vercel.app" ||
+            origin == "https://truchoavien.com" ||
+            origin == "https://www.truchoavien.com" ||
+            origin.StartsWith("http://localhost") ||
+            origin.Contains("onrender.com")) // 👈 Cho phép subdomain Render
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
     });
 });
+
 
 
 var app = builder.Build();
