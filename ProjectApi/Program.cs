@@ -101,11 +101,18 @@ if (string.IsNullOrWhiteSpace(connectionString))
 
 builder.Services.AddDbContext<FurnitureDbContext>(options =>
 {
-    if (connectionString.Contains("postgres", StringComparison.OrdinalIgnoreCase))
+    if (connectionString.Contains("Host=", StringComparison.OrdinalIgnoreCase) ||
+        connectionString.Contains("Username=", StringComparison.OrdinalIgnoreCase) ||
+        connectionString.Contains("postgresql", StringComparison.OrdinalIgnoreCase))
+    {
         options.UseNpgsql(connectionString);
+    }
     else
+    {
         options.UseSqlServer(connectionString);
+    }
 });
+
 
 // ====================
 // 🔹 JWT setup
