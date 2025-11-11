@@ -645,8 +645,11 @@ namespace ProjectApi.Controllers
             variant.EngravingY = dto.EngravingY;
             variant.EngravingColor = dto.EngravingColor ?? variant.EngravingColor;
             variant.EngravingFont = dto.EngravingFont ?? variant.EngravingFont;
+            variant.EngravingText = dto.EngravingText ?? variant.EngravingText; // 🆕
+            if (dto.EngravingSize.HasValue)
+                variant.EngravingSize = dto.EngravingSize.Value;                // 🆕
 
-            // ✅ Thêm dòng này để lưu giá khắc riêng
+            // ✅ Cập nhật giá khắc riêng nếu có
             if (dto.ExtraPrice.HasValue)
                 variant.ExtraPrice = dto.ExtraPrice.Value;
 
@@ -658,16 +661,17 @@ namespace ProjectApi.Controllers
                 variant = new
                 {
                     variant.Id,
+                    variant.EngravingText,
                     variant.EngravingX,
                     variant.EngravingY,
                     variant.EngravingColor,
                     variant.EngravingFont,
-                    variant.ExtraPrice // ✅ trả luôn giá khắc mới về
+                    variant.EngravingSize, // 🆕 Trả luôn về frontend
+                    variant.ExtraPrice
                 }
             });
         }
 
-        // ✅ Cập nhật DTO để nhận thêm giá khắc
         public class EngravingUpdateDto
         {
             public decimal EngravingX { get; set; }
@@ -675,9 +679,12 @@ namespace ProjectApi.Controllers
             public string? EngravingColor { get; set; }
             public string? EngravingFont { get; set; }
 
-            // ✅ Thêm giá khắc riêng
+            public string? EngravingText { get; set; } // 📝 Thêm nội dung khắc
+            public int? EngravingSize { get; set; }    // 📏 Thêm cỡ chữ
+
             public decimal? ExtraPrice { get; set; }
         }
+
 
 
         [HttpPut("{id}/engraving-text")]
