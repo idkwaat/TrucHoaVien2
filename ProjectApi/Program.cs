@@ -147,14 +147,17 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "https://truchoavien.vercel.app", // domain Vercel
-            "http://localhost:5173",          // local dev
-            "http://localhost:3000"           // fallback local
+            "https://truchoavien.com",        // domain chính thức
+            "https://www.truchoavien.com",    // 🆕 bản có www
+            "http://localhost:5173",          // local dev (Vite)
+            "http://localhost:3000"           // local dev (React)
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
     });
 });
+
 
 var app = builder.Build();
 
