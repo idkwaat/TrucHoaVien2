@@ -672,6 +672,20 @@ namespace ProjectApi.Controllers
             });
         }
 
+        public class EngravingUpdateDto
+        {
+            public decimal EngravingX { get; set; }
+            public decimal EngravingY { get; set; }
+            public string? EngravingColor { get; set; }
+            public string? EngravingFont { get; set; }
+
+            public string? EngravingText { get; set; } // 📝 Thêm nội dung khắc
+            public int? EngravingSize { get; set; }    // 📏 Thêm cỡ chữ
+
+            public decimal? ExtraPrice { get; set; }
+        }
+
+
 
         [HttpPut("{id}/engraving-text")]
         public async Task<IActionResult> UpdateEngravingText(int id, [FromBody] EngravingTextDto dto)

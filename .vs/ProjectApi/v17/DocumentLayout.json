@@ -221,7 +221,7 @@
               "RelativeDocumentMoniker": "ProjectApi\\Controllers\\ProductsController.cs",
               "ToolTip": "C:\\Users\\pck06\\source\\repos\\TrucHoaVien2\\ProjectApi\\Controllers\\ProductsController.cs",
               "RelativeToolTip": "ProjectApi\\Controllers\\ProductsController.cs",
-              "ViewState": "AgIAAJICAAAAAAAAAAAowKECAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJ8CAAAAAAAAAAAowK4CAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-08T13:47:37.349Z",
               "EditorCaption": ""
@@ -236,8 +236,7 @@
               "RelativeToolTip": "ProjectApi\\Models\\ProductVarient.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAcwBsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T10:42:02.211Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-13T10:42:02.211Z"
             },
             {
               "$type": "Document",
@@ -297,8 +296,7 @@
               "RelativeToolTip": "ProjectApi\\Models\\OrderItem.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T13:15:12.939Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-09T13:15:12.939Z"
             },
             {
               "$type": "Document",
@@ -310,8 +308,7 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\VariantDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-08T14:07:49.552Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-08T14:07:49.552Z"
             },
             {
               "$type": "Document",
@@ -323,8 +320,7 @@
               "RelativeToolTip": "ProjectApi\\Dtos\\ProductUpdateDto.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAA8wCYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T14:31:04.152Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-06T14:31:04.152Z"
             },
             {
               "$type": "Document",
