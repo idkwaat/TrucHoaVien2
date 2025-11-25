@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectApi.Data;
-using ProjectApi.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,48 +18,86 @@ namespace ProjectApi.Controllers
             _context = context;
         }
 
-        // 📌 1️⃣ Ghi log truy cập mỗi khi có request từ frontend
-        [HttpPost("visit")]
-        public async Task<IActionResult> LogVisit()
+        // -------------------------------
+        // 📌 FUNCTION: Xử lý range
+        // -------------------------------
+        private (DateTime From, DateTime To) GetRange(string range)
         {
-            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
-            var ua = Request.Headers["User-Agent"].ToString();
-            var path = HttpContext.Request.Headers["Referer"].ToString(); // URL người dùng đang truy cập
+            var today = DateTime.UtcNow.Date;
 
-            // ✅ Chỉ log nếu người dùng vào trang chủ (ví dụ: https://domain/ hoặc http://localhost:5173/)
-            if (!string.IsNullOrEmpty(path) && !path.EndsWith("/"))
+            return range switch
             {
-                return Ok(new { message = "Not homepage — skip log" });
-            }
-
-            var tenMinutesAgo = DateTime.UtcNow.AddMinutes(-10);
-
-            // ✅ Kiểm tra có bản ghi cùng IP trong 10 phút qua chưa
-            var recentVisit = await _context.VisitorLogs
-                .Where(v => v.IpAddress == ip && v.VisitTime >= tenMinutesAgo)
-                .FirstOrDefaultAsync();
-
-            if (recentVisit != null)
-            {
-                return Ok(new { message = "Duplicate visit ignored" });
-            }
-
-            // ✅ Ghi mới
-            var visit = new VisitorLog
-            {
-                IpAddress = ip,
-                UserAgent = ua,
-                VisitTime = DateTime.UtcNow
+                "month" => (today.AddDays(-29), today),
+                "year"  => (today.AddYears(-1), today),
+                "all"   => (DateTime.UtcNow.AddYears(-10), today),
+                _       => (today.AddDays(-6), today) // default = week
             };
-
-            _context.VisitorLogs.Add(visit);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Visit logged" });
         }
 
+        // -------------------------------------
+        // 📌 1. VISIT CHART — Lượt truy cập
+        // -------------------------------------
+        [HttpGet("visit-chart")]
+        public async Task<IActionResult> GetVisitChart([FromQuery] string range = "week")
+        {
+            var (fromDate, toDate) = GetRange(range);
 
-        // 📌 2️⃣ Tổng quan Dashboard
+            var raw = await _context.VisitorLogs
+                .Where(v => v.VisitTime.Date >= fromDate && v.VisitTime.Date <= toDate)
+                .GroupBy(v => v.VisitTime.Date)
+                .Select(g => new
+                {
+                    Date = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+
+            var result = raw
+                .Select(x => new
+                {
+                    Date = x.Date.ToString("yyyy-MM-dd"),
+                    x.Count
+                })
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            return Ok(result);
+        }
+
+        // -------------------------------------
+        // 📌 2. REVENUE CHART — Doanh thu
+        // -------------------------------------
+        [HttpGet("revenue-chart")]
+        public async Task<IActionResult> GetRevenueChart([FromQuery] string range = "week")
+        {
+            var (fromDate, toDate) = GetRange(range);
+
+            var raw = await _context.Orders
+                .Where(o => o.OrderDate.Date >= fromDate && o.OrderDate.Date <= toDate)
+                .Where(o => o.Status == "Delivered" || o.Status == "Confirmed")
+                .GroupBy(o => o.OrderDate.Date)
+                .Select(g => new
+                {
+                    Date = g.Key,
+                    Revenue = g.Sum(x => x.Total)
+                })
+                .ToListAsync();
+
+            var result = raw
+                .Select(x => new
+                {
+                    Date = x.Date.ToString("yyyy-MM-dd"),
+                    x.Revenue
+                })
+                .OrderBy(x => x.Date)
+                .ToList();
+
+            return Ok(result);
+        }
+
+        // -------------------------------------
+        // 📌 3. OVERVIEW — Tổng quan dashboard
+        // -------------------------------------
         [HttpGet("overview")]
         public async Task<IActionResult> GetOverview()
         {
@@ -75,16 +112,17 @@ namespace ProjectApi.Controllers
                 .SumAsync(o => (decimal?)o.Total) ?? 0;
 
             var todayRevenue = await _context.Orders
-                .Where(o => (o.Status == "Delivered" || o.Status == "Confirmed") && o.OrderDate.Date == today)
+                .Where(o => (o.Status == "Delivered" || o.Status == "Confirmed") &&
+                            o.OrderDate.Date == today)
                 .SumAsync(o => (decimal?)o.Total) ?? 0;
 
             var totalUsers = await _context.Users.CountAsync();
+
             var totalVisits = await _context.VisitorLogs.CountAsync();
             var todayVisits = await _context.VisitorLogs.CountAsync(v => v.VisitTime.Date == today);
 
-            // 🆕 Tổng lượt truy cập 7 ngày gần nhất
             var last7DaysVisits = await _context.VisitorLogs
-                .CountAsync(v => v.VisitTime.Date >= sevenDaysAgo && v.VisitTime.Date <= today);
+                .CountAsync(v => v.VisitTime.Date >= sevenDaysAgo);
 
             return Ok(new
             {
@@ -95,68 +133,40 @@ namespace ProjectApi.Controllers
                 totalUsers,
                 totalVisits,
                 todayVisits,
-                last7DaysVisits // 🆕 thêm vào đây
+                last7DaysVisits
             });
         }
 
-
-        [HttpGet("revenue-chart")]
-        public async Task<IActionResult> GetRevenueChart()
+        // -------------------------------------
+        // 📌 4. LOG VISIT — Ghi log truy cập
+        // -------------------------------------
+        [HttpPost("visit")]
+        public async Task<IActionResult> LogVisit()
         {
-            var now = DateTime.UtcNow.Date;
+            var ip = HttpContext.Connection.RemoteIpAddress?.ToString();
+            var ua = Request.Headers["User-Agent"].ToString();
+            var referer = Request.Headers["Referer"].ToString();
 
-            // Group theo ngày (chưa ToString)
-            var rawData = await _context.Orders
-                .Where(o => o.OrderDate >= now.AddDays(-6))
-                .GroupBy(o => o.OrderDate.Date)
-                .Select(g => new
-                {
-                    Date = g.Key,
-                    Revenue = g.Sum(x => x.Total)
-                })
-                .ToListAsync();
+            if (!referer.EndsWith("/"))
+                return Ok(new { message = "Not homepage — skip log" });
 
-            // Format lại sau khi EF đã lấy ra (chạy trong bộ nhớ)
-            var result = rawData
-                .Select(g => new
-                {
-                    Date = g.Date.ToString("yyyy-MM-dd"),
-                    g.Revenue
-                })
-                .OrderBy(x => x.Date)
-                .ToList();
+            var tenMinAgo = DateTime.UtcNow.AddMinutes(-10);
 
-            return Ok(result);
+            var exists = await _context.VisitorLogs
+                .AnyAsync(v => v.IpAddress == ip && v.VisitTime >= tenMinAgo);
+
+            if (exists)
+                return Ok(new { message = "Duplicate visit ignored" });
+
+            _context.VisitorLogs.Add(new Models.VisitorLog
+            {
+                IpAddress = ip,
+                UserAgent = ua,
+                VisitTime = DateTime.UtcNow
+            });
+
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Visit logged" });
         }
-
-
-        // 📈 4️⃣ Biểu đồ lượt truy cập 7 ngày
-        [HttpGet("visit-chart")]
-        public async Task<IActionResult> GetVisitChart()
-        {
-            var now = DateTime.UtcNow.Date;
-
-            var rawData = await _context.VisitorLogs
-                .Where(v => v.VisitTime >= now.AddDays(-6))
-                .GroupBy(v => v.VisitTime.Date)
-                .Select(g => new
-                {
-                    Date = g.Key,
-                    Count = g.Count()
-                })
-                .ToListAsync();
-
-            var result = rawData
-                .Select(g => new
-                {
-                    Date = g.Date.ToString("yyyy-MM-dd"),
-                    g.Count
-                })
-                .OrderBy(x => x.Date)
-                .ToList();
-
-            return Ok(result);
-        }
-
     }
 }
