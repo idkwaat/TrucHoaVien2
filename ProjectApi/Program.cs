@@ -14,7 +14,13 @@ using Microsoft.Extensions.Options;
 using ProjectApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
-Console.WriteLine("SERVER STARTED !!!, có log nhé");
+
+// ✅ Tắt reload config để giảm file watcher
+builder.Configuration.Sources.Clear();
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+    .AddEnvironmentVariables();
+
 
 builder.Services.AddSignalR();
 
