@@ -18,6 +18,10 @@ RUN dotnet publish -c Release -o /app/out
 # ================================
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
+
+# ✅ FIX inotify cho Render
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
 COPY --from=build /app/out .
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
